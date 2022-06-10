@@ -1,7 +1,12 @@
 package sistemafarmaciaGUI;
 
 import java.awt.Color;
+import java.sql.SQLException;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import sistemafarmacia.ComunicacionBD;
 import sistemafarmacia.Conexion;
 import sistemafarmacia.Pedidos;
 
@@ -193,11 +198,13 @@ public class frmDatos extends javax.swing.JDialog {
 
     private void btnAceptarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarMouseClicked
         Conexion objConexion = new Conexion();                                       
-                
-        String sentenciaInsert = String.format("INSERT INTO pedidos (id, nombre_producto, tipo, cantidad, proveedor, sucursal) "
-                + "VALUES (null, '%s', '%s', '%s', '%s', '%s')", 
-                objPedido.getNombreProducto(), objPedido.getTipoProducto(), objPedido.getCantidad(), objPedido.getProveedor(), objPedido.getSucursal());
-        objConexion.ejecutarSentencia(sentenciaInsert);  
+        
+        String[] subir = {txtProducto.getText(),txtTipo.getText(),txtCantidad.getText(),txtProveedor.getText(),txtSucursal.getText()};
+                try {
+                    ComunicacionBD.subirBD("pedidos", subir);
+                } catch (SQLException ex) {
+                    Logger.getLogger(frmPedido.class.getName()).log(Level.SEVERE, null, ex);
+                }
         
         JOptionPane.showMessageDialog(
                     this, 

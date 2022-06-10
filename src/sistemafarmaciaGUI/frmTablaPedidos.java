@@ -2,38 +2,31 @@ package sistemafarmaciaGUI;
 
 import java.awt.Color;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
+import sistemafarmacia.ComunicacionBD;
 import sistemafarmacia.Conexion;
 
 public class frmTablaPedidos extends javax.swing.JDialog {
     
-    DefaultTableModel modelo;
-
+    private static final String tabla = "pedidos";
+    private static final String[] datosTabla = new String [] {
+            "id","nombreLibro", "cantidadLibro", "tipoLibro", "sucursal",
+                    "proveedor", "fecha"
+            } ; 
+    
     public frmTablaPedidos(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        
-        String[] titulos = {"ID", "Nombre", "Tipo", "Cantidad", "Proveedor", "Sucursal"};
-        modelo = new DefaultTableModel(null,titulos);
-        tblPedidos.setModel(modelo);
-        
-        refrescarTabla();
-    }
-    
-    public void refrescarTabla(){
-        Conexion objConexion = new Conexion();        
         try {
-            ResultSet resultado = objConexion.consultarRegistros("SELECT * FROM pedidos");            
-            
-            while (resultado.next()) {                                                
-                Object[] oPedido = {resultado.getString("id"), resultado.getString("nombre_producto"), resultado.getString("tipo"),
-                resultado.getString("cantidad"), resultado.getString("proveedor"), resultado.getString("sucursal"),};             
-                
-                modelo.addRow(oPedido);
-            }                                                    
-        }catch(Exception e) {
-            System.out.println(e);
+            tblPedidos.setModel(new javax.swing.table.DefaultTableModel(
+                            ComunicacionBD.datosBD(tabla),datosTabla));
+        } catch (SQLException ex) {
+            Logger.getLogger(frmTablaPedidos.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
 
     /**

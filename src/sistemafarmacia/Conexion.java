@@ -1,94 +1,56 @@
 package sistemafarmacia;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Properties;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.regex.Pattern;
 
 public class Conexion {
-    public Connection connection;
-    Properties properties = new Properties();
     
-    String DRIVER;
-    String URL;
-    String USER;
-    String PASSWORD;
+    private static Connection conn;
+    private static final String driver = "com.mysql.jdbc.Driver";
+    private static final String user = "root";
+    private static final String pass = "";
+    private static final String db = "bd_sistemafarmacia";
+    private static final String url = "jdbc:mysql://localhost/"+db+"";
     
-    public Conexion() {
-        try {
-            //properties.load(new FileInputStream(new File("configuracion.properties")));
-            cargarConfig();
+    public Conexion(){
+        conn = null;
+        try{
+            Class.forName(driver);
             
-            Class.forName(DRIVER);            
-            connection = DriverManager.getConnection(URL, USER, PASSWORD);
+            conn = DriverManager.getConnection(url, user, pass);
             
-            System.out.println("Conexión establecida");
-            
-        }catch (Exception e) {
-            System.out.println("Error: " + e);
+            // Conexion?
+            if(conn != null)
+                System.out.println("Conexión establecida exitosamente");
+        }catch (ClassNotFoundException | SQLException ex){
+            System.out.println("Conexión Fallida:\n\n"+ex);
         }
-    }  
+    }
     
-    public void cargarConfig() {
+    public Connection getConnection(){
+        return conn;
+    }
+    
+    public static void main(String[] args) {
+        
         try {
-            String ruta = System.getProperty("user.dir");
-            String separador = "\\";
-            String[] rutaDividida = ruta.split(Pattern.quote(separador));
-            String rutaFinal = "C:";
-            
-            for( int i=1 ; i<rutaDividida.length-1 ; i++ ) {
-                ruta = separador + rutaDividida[i];
-                rutaFinal += ruta;
+            Conexion conx = new Conexion();
+            Statement stat;
+            ResultSet rs;
+            stat = conx.conn.createStatement();
+            rs = stat.executeQuery("select * from pedidos");
+            while(rs.next()){
+                System.out.println(rs.getString("nombre_producto"));
             }
+            conx.conn.close();
             
-            InputStream entrada = new FileInputStream(rutaFinal +  "\\SistemaFarmacia\\configuracion.properties");
-            properties.load(entrada);
             
-            //properties.load(new FileInputStream(new File("configuracion.properties")));
-            
-            DRIVER = properties.getProperty("DRIVER");
-            URL = properties.getProperty("URL");
-            USER = properties.getProperty("USER");
-            PASSWORD = properties.getProperty("PASSWORD");
-        }catch (FileNotFoundException e) {
-            System.out.println("Error: " + e);
-        } catch (IOException ex) {
-            System.out.println("Error: " + ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-       
-    
-    
-    public int ejecutarSentencia(String sentencia){
-        try {
-            PreparedStatement prep = connection.prepareStatement(sentencia);
-            prep.execute();
-            return 1;
-        }catch (SQLException e) {
-            System.out.println(e);
-            return 0;
-        }
-    }
-    
-    public ResultSet consultarRegistros(String sentencia) {
-        try {
-            PreparedStatement prep = connection.prepareStatement(sentencia);
-            ResultSet respuesta = prep.executeQuery();
-            return respuesta;
-        }catch (SQLException e) {
-            System.out.println(e);
-            return null;
-        }
-    }
-    
 }
