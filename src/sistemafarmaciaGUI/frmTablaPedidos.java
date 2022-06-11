@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import sistemafarmacia.ComunicacionBD;
 import sistemafarmacia.Conexion;
@@ -13,13 +14,14 @@ public class frmTablaPedidos extends javax.swing.JDialog {
     
     private static final String tabla = "pedidos";
     private static final String[] datosTabla = new String [] {
-            "id","nombreLibro", "cantidadLibro", "tipoLibro", "sucursal",
-                    "proveedor", "fecha"
+            "id","Producto", "Tipo", "Cantidad", "Proveedor",
+                    "Sucursal"
             } ; 
     
     public frmTablaPedidos(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.tblPedidos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         try {
             tblPedidos.setModel(new javax.swing.table.DefaultTableModel(
                             ComunicacionBD.datosBD(tabla),datosTabla));
@@ -44,11 +46,17 @@ public class frmTablaPedidos extends javax.swing.JDialog {
         lblTitulo = new javax.swing.JLabel();
         panSalir = new javax.swing.JPanel();
         lblSalir = new javax.swing.JLabel();
+        panFondo2 = new javax.swing.JPanel();
+        jButton2 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
+        setPreferredSize(new java.awt.Dimension(700, 500));
+        setResizable(false);
 
         panFondo.setBackground(new java.awt.Color(255, 255, 255));
+        panFondo.setPreferredSize(new java.awt.Dimension(700, 500));
         panFondo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         tblPedidos.setModel(new javax.swing.table.DefaultTableModel(
@@ -64,14 +72,16 @@ public class frmTablaPedidos extends javax.swing.JDialog {
         ));
         scpPedidos.setViewportView(tblPedidos);
 
-        panFondo.add(scpPedidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 650, 280));
+        panFondo.add(scpPedidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 650, 330));
 
         lblTitulo.setFont(new java.awt.Font("Roboto Black", 1, 24)); // NOI18N
         lblTitulo.setText("Pedidos Realizados");
-        panFondo.add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 50, -1, -1));
+        panFondo.add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 35, -1, -1));
 
+        panSalir.setBackground(new java.awt.Color(255, 255, 255));
         panSalir.setPreferredSize(new java.awt.Dimension(40, 40));
 
+        lblSalir.setBackground(new java.awt.Color(255, 255, 255));
         lblSalir.setFont(new java.awt.Font("Roboto", 0, 33)); // NOI18N
         lblSalir.setText("X");
         lblSalir.setPreferredSize(new java.awt.Dimension(24, 35));
@@ -101,6 +111,32 @@ public class frmTablaPedidos extends javax.swing.JDialog {
         );
 
         panFondo.add(panSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 0, -1, -1));
+
+        panFondo2.setBackground(new java.awt.Color(252, 215, 112));
+        panFondo2.setPreferredSize(new java.awt.Dimension(210, 500));
+
+        javax.swing.GroupLayout panFondo2Layout = new javax.swing.GroupLayout(panFondo2);
+        panFondo2.setLayout(panFondo2Layout);
+        panFondo2Layout.setHorizontalGroup(
+            panFondo2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 210, Short.MAX_VALUE)
+        );
+        panFondo2Layout.setVerticalGroup(
+            panFondo2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 500, Short.MAX_VALUE)
+        );
+
+        panFondo.add(panFondo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        jButton2.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        jButton2.setText("Modificar");
+        jButton2.setPreferredSize(new java.awt.Dimension(100, 25));
+        panFondo.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 440, -1, 30));
+
+        jButton1.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        jButton1.setText("Eliminar");
+        jButton1.setPreferredSize(new java.awt.Dimension(100, 25));
+        panFondo.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 440, -1, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -173,9 +209,12 @@ public class frmTablaPedidos extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel lblSalir;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JPanel panFondo;
+    private javax.swing.JPanel panFondo2;
     private javax.swing.JPanel panSalir;
     private javax.swing.JScrollPane scpPedidos;
     private javax.swing.JTable tblPedidos;

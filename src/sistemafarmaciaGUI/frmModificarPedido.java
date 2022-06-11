@@ -9,9 +9,9 @@ import javax.swing.JOptionPane;
 import sistemafarmacia.Conexion;
 import sistemafarmacia.Pedidos;
 
-public class frmPedido extends javax.swing.JFrame {
+public class frmModificarPedido extends javax.swing.JFrame {
 
-    public frmPedido() {
+    public frmModificarPedido() {
         initComponents();   
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/imagenes/icon.png")));
     }
@@ -26,9 +26,6 @@ public class frmPedido extends javax.swing.JFrame {
         proveedores = new javax.swing.ButtonGroup();
         sucursales = new javax.swing.ButtonGroup();
         panFondo = new javax.swing.JPanel();
-        panFondo2 = new javax.swing.JPanel();
-        lblIconFarmacia = new javax.swing.JLabel();
-        btnVerPedidos = new javax.swing.JButton();
         lblTitulo = new javax.swing.JLabel();
         lblProducto = new javax.swing.JLabel();
         lblTipo = new javax.swing.JLabel();
@@ -52,75 +49,37 @@ public class frmPedido extends javax.swing.JFrame {
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setUndecorated(true);
         setResizable(false);
-        setSize(new java.awt.Dimension(700, 500));
+        setSize(new java.awt.Dimension(500, 500));
 
         panFondo.setBackground(new java.awt.Color(255, 255, 255));
-        panFondo.setMinimumSize(new java.awt.Dimension(700, 500));
-        panFondo.setPreferredSize(new java.awt.Dimension(700, 500));
+        panFondo.setMinimumSize(new java.awt.Dimension(500, 500));
+        panFondo.setPreferredSize(new java.awt.Dimension(500, 500));
         panFondo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        panFondo2.setBackground(new java.awt.Color(252, 215, 112));
-
-        lblIconFarmacia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/farmacia.png"))); // NOI18N
-
-        btnVerPedidos.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        btnVerPedidos.setText("Ver Pedidos");
-        btnVerPedidos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVerPedidosActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout panFondo2Layout = new javax.swing.GroupLayout(panFondo2);
-        panFondo2.setLayout(panFondo2Layout);
-        panFondo2Layout.setHorizontalGroup(
-            panFondo2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panFondo2Layout.createSequentialGroup()
-                .addGroup(panFondo2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panFondo2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(lblIconFarmacia))
-                    .addGroup(panFondo2Layout.createSequentialGroup()
-                        .addGap(45, 45, 45)
-                        .addComponent(btnVerPedidos)))
-                .addContainerGap(20, Short.MAX_VALUE))
-        );
-        panFondo2Layout.setVerticalGroup(
-            panFondo2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panFondo2Layout.createSequentialGroup()
-                .addContainerGap(157, Short.MAX_VALUE)
-                .addComponent(lblIconFarmacia, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(88, 88, 88)
-                .addComponent(btnVerPedidos, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30))
-        );
-
-        panFondo.add(panFondo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 500));
-
         lblTitulo.setFont(new java.awt.Font("Roboto Black", 1, 24)); // NOI18N
-        lblTitulo.setText("Nuevo Pedido");
-        panFondo.add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 50, -1, -1));
+        lblTitulo.setText("Modificar Pedido");
+        panFondo.add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 40, -1, -1));
 
         lblProducto.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         lblProducto.setText("Producto:");
-        panFondo.add(lblProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 110, -1, -1));
+        panFondo.add(lblProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 100, -1, -1));
 
         lblTipo.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         lblTipo.setText("Tipo:");
-        panFondo.add(lblTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 160, -1, -1));
+        panFondo.add(lblTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 150, -1, -1));
 
         lblCantidad.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         lblCantidad.setText("Cantidad:");
-        panFondo.add(lblCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 210, -1, -1));
+        panFondo.add(lblCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 200, -1, -1));
 
         lblProveedor.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         lblProveedor.setText("Proveedor:");
-        panFondo.add(lblProveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 260, -1, -1));
+        panFondo.add(lblProveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 250, -1, -1));
 
         lblSucursal.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         lblSucursal.setText("Sucursal:");
-        panFondo.add(lblSucursal, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 340, -1, -1));
-        panFondo.add(txtProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 100, 220, 30));
+        panFondo.add(lblSucursal, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 330, -1, -1));
+        panFondo.add(txtProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 90, 220, 30));
 
         btnBorrar.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         btnBorrar.setText("Borrar");
@@ -129,7 +88,7 @@ public class frmPedido extends javax.swing.JFrame {
                 btnBorrarMouseClicked(evt);
             }
         });
-        panFondo.add(btnBorrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 440, 90, 30));
+        panFondo.add(btnBorrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 430, 90, 30));
 
         btnConfirmar.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         btnConfirmar.setText("Confirmar");
@@ -138,14 +97,14 @@ public class frmPedido extends javax.swing.JFrame {
                 btnConfirmarActionPerformed(evt);
             }
         });
-        panFondo.add(btnConfirmar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 440, -1, 30));
+        panFondo.add(btnConfirmar, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 430, -1, 30));
 
         cmbTipo.setFont(new java.awt.Font("Roboto Light", 0, 14)); // NOI18N
         cmbTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecciona uno", "Tabletas", "Capsulas", "Solución", "Inyectable" }));
-        panFondo.add(cmbTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 150, 220, 30));
+        panFondo.add(cmbTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 140, 220, 30));
 
         txtCantidad.setFont(new java.awt.Font("Roboto Light", 0, 14)); // NOI18N
-        panFondo.add(txtCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 200, 90, 30));
+        panFondo.add(txtCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 190, 90, 30));
 
         proveedores.add(jrbProveedor1);
         jrbProveedor1.setText("Medley");
@@ -159,7 +118,7 @@ public class frmPedido extends javax.swing.JFrame {
                 jrbProveedor1ActionPerformed(evt);
             }
         });
-        panFondo.add(jrbProveedor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 250, 120, 30));
+        panFondo.add(jrbProveedor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 240, 120, 30));
 
         proveedores.add(jrbProveedor2);
         jrbProveedor2.setText("Biomep");
@@ -168,15 +127,15 @@ public class frmPedido extends javax.swing.JFrame {
                 jrbProveedor2MouseClicked(evt);
             }
         });
-        panFondo.add(jrbProveedor2, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 290, 120, 30));
+        panFondo.add(jrbProveedor2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 280, 120, 30));
 
         sucursales.add(cbxSucursal1);
         cbxSucursal1.setText("Las Palmas");
-        panFondo.add(cbxSucursal1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 340, 120, 30));
+        panFondo.add(cbxSucursal1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 330, 120, 30));
 
         sucursales.add(cbxSucursal2);
         cbxSucursal2.setText("Puerto México");
-        panFondo.add(cbxSucursal2, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 380, 120, 30));
+        panFondo.add(cbxSucursal2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 370, 120, 30));
 
         panSalir.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -210,14 +169,16 @@ public class frmPedido extends javax.swing.JFrame {
                 .addComponent(lblSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        panFondo.add(panSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 0, 40, -1));
-        panFondo.add(txtId, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 60, 60, 20));
+        panFondo.add(panSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 0, 40, -1));
+        panFondo.add(txtId, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 50, 60, 20));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panFondo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(panFondo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -275,7 +236,7 @@ public class frmPedido extends javax.swing.JFrame {
                 String tipo = (String)cmbTipo.getSelectedItem();
                 objPedido.setTipoProducto(tipo);
             } catch (Exception ex) {
-                Logger.getLogger(frmPedido.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(frmModificarPedido.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         
@@ -350,12 +311,6 @@ public class frmPedido extends javax.swing.JFrame {
     private void btnBorrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBorrarMouseClicked
         borrarDatos();
     }//GEN-LAST:event_btnBorrarMouseClicked
-
-    private void btnVerPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerPedidosActionPerformed
-        frmTablaPedidos dialog = new frmTablaPedidos(this, true);
-        dialog.setLocationRelativeTo(this);
-        dialog.setVisible(true);
-    }//GEN-LAST:event_btnVerPedidosActionPerformed
        
     public void borrarDatos() {
         txtProducto.setText("");
@@ -379,20 +334,21 @@ public class frmPedido extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frmPedido.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmModificarPedido.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frmPedido.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmModificarPedido.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frmPedido.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmModificarPedido.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frmPedido.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmModificarPedido.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {                
-                frmPedido frmpedido = new frmPedido();
+                frmModificarPedido frmpedido = new frmModificarPedido();
                 frmpedido.setLocationRelativeTo(null);
                 frmpedido.setVisible(true);                
             }
@@ -402,14 +358,12 @@ public class frmPedido extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBorrar;
     private javax.swing.JButton btnConfirmar;
-    private javax.swing.JButton btnVerPedidos;
     private javax.swing.JCheckBox cbxSucursal1;
     private javax.swing.JCheckBox cbxSucursal2;
     private javax.swing.JComboBox<String> cmbTipo;
     private javax.swing.JRadioButton jrbProveedor1;
     private javax.swing.JRadioButton jrbProveedor2;
     private javax.swing.JLabel lblCantidad;
-    private javax.swing.JLabel lblIconFarmacia;
     private javax.swing.JLabel lblProducto;
     private javax.swing.JLabel lblProveedor;
     private javax.swing.JLabel lblSalir;
@@ -417,7 +371,6 @@ public class frmPedido extends javax.swing.JFrame {
     private javax.swing.JLabel lblTipo;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JPanel panFondo;
-    private javax.swing.JPanel panFondo2;
     private javax.swing.JPanel panSalir;
     private javax.swing.ButtonGroup proveedores;
     private javax.swing.ButtonGroup sucursales;
