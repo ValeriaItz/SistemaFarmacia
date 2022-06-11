@@ -1,5 +1,6 @@
 package sistemafarmacia;
 
+import sistemafarmaciaGUI.frmInicioSesion;
 import sistemafarmaciaGUI.frmPedido;
 
 public class SistemaFarmacia {

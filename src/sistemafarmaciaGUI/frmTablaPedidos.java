@@ -47,12 +47,11 @@ public class frmTablaPedidos extends javax.swing.JDialog {
         panSalir = new javax.swing.JPanel();
         lblSalir = new javax.swing.JLabel();
         panFondo2 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnModificar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(700, 500));
         setResizable(false);
 
         panFondo.setBackground(new java.awt.Color(255, 255, 255));
@@ -128,15 +127,20 @@ public class frmTablaPedidos extends javax.swing.JDialog {
 
         panFondo.add(panFondo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        jButton2.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        jButton2.setText("Modificar");
-        jButton2.setPreferredSize(new java.awt.Dimension(100, 25));
-        panFondo.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 440, -1, 30));
+        btnModificar.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        btnModificar.setText("Modificar");
+        btnModificar.setPreferredSize(new java.awt.Dimension(100, 25));
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
+        panFondo.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 440, -1, 30));
 
-        jButton1.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        jButton1.setText("Eliminar");
-        jButton1.setPreferredSize(new java.awt.Dimension(100, 25));
-        panFondo.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 440, -1, 30));
+        btnEliminar.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        btnEliminar.setText("Eliminar");
+        btnEliminar.setPreferredSize(new java.awt.Dimension(100, 25));
+        panFondo.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 440, -1, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -165,6 +169,12 @@ public class frmTablaPedidos extends javax.swing.JDialog {
         panSalir.setBackground(Color.white);
         lblSalir.setForeground(Color.black);
     }//GEN-LAST:event_lblSalirMouseExited
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        frmModificar dialog = new frmModificar(this, true);
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_btnModificarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -209,8 +219,8 @@ public class frmTablaPedidos extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnModificar;
     private javax.swing.JLabel lblSalir;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JPanel panFondo;
