@@ -1,5 +1,6 @@
 package sistemafarmaciaGUI;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,8 +10,10 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import sistemafarmacia.ComunicacionBD;
 import sistemafarmacia.Conexion;
+import sistemafarmacia.Pedidos;
 
 public class frmTablaPedidos extends javax.swing.JDialog {
+    
     
     private static final String tabla = "pedidos";
     private static final String[] datosTabla = new String [] {
@@ -21,10 +24,12 @@ public class frmTablaPedidos extends javax.swing.JDialog {
     public frmTablaPedidos(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        
         this.tblPedidos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         try {
             tblPedidos.setModel(new javax.swing.table.DefaultTableModel(
                             ComunicacionBD.datosBD(tabla),datosTabla));
+            
         } catch (SQLException ex) {
             Logger.getLogger(frmTablaPedidos.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -106,7 +111,7 @@ public class frmTablaPedidos extends javax.swing.JDialog {
         );
         panSalirLayout.setVerticalGroup(
             panSalirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblSalir, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+            .addComponent(lblSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 40, Short.MAX_VALUE)
         );
 
         panFondo.add(panSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 0, -1, -1));
@@ -140,6 +145,11 @@ public class frmTablaPedidos extends javax.swing.JDialog {
         btnEliminar.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         btnEliminar.setText("Eliminar");
         btnEliminar.setPreferredSize(new java.awt.Dimension(100, 25));
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
         panFondo.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 440, -1, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -171,10 +181,60 @@ public class frmTablaPedidos extends javax.swing.JDialog {
     }//GEN-LAST:event_lblSalirMouseExited
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        frmModificar dialog = new frmModificar(this, true);
-        dialog.setLocationRelativeTo(this);
-        dialog.setVisible(true);
+        
+        try {
+            int idcell = tblPedidos.getSelectedRow();
+            if(idcell <= -1){
+                javax.swing.JOptionPane.showMessageDialog(this, "Debes seleccionar el pedido que deseas modificar. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            }
+            else{
+
+                String list[][] = ComunicacionBD.datosBD(tabla);
+                String id = list[idcell][0];
+                
+                if(id.isEmpty()){
+                    javax.swing.JOptionPane.showMessageDialog(this, "Debes seleccionar el pedido que deseas modificar. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                }
+                else{
+                    frmModificar dialog = new frmModificar(this, true, list[idcell], tblPedidos);
+                    dialog.setLocationRelativeTo(this);
+                    dialog.setVisible(true);
+                    
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(frmTablaPedidos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
     }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        try {
+            int idcell = tblPedidos.getSelectedRow();
+            if(idcell <= -1){
+                javax.swing.JOptionPane.showMessageDialog(this, "Debes seleccionar el pedido que deseas elminar. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            }
+            else{                
+            String list[][] = ComunicacionBD.datosBD(tabla);
+                
+                String id = list[idcell][0];
+                
+                if(id.isEmpty()){
+                    javax.swing.JOptionPane.showMessageDialog(this, "Debes seleccionar el pedido que deseas elminar. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                }
+                else{
+                    ComunicacionBD.eliminarBD(tabla, id);
+                    javax.swing.JOptionPane.showMessageDialog(this, "¡Pedido eliminado con éxito! \n", "HECHO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                    tblPedidos.setModel(new javax.swing.table.DefaultTableModel(
+                            ComunicacionBD.datosBD(tabla),datosTabla));
+                   
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(frmTablaPedidos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
     /**
      * @param args the command line arguments

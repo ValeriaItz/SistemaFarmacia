@@ -199,7 +199,7 @@ public class frmDatos extends javax.swing.JDialog {
     private void btnAceptarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarMouseClicked
         Conexion objConexion = new Conexion();                                       
         
-        String[] subir = {txtProducto.getText(),txtTipo.getText(),txtCantidad.getText(),txtProveedor.getText(),txtSucursal.getText()};
+        String[] subir = {objPedido.getNombreProducto(),objPedido.getTipoProducto(),String.valueOf(objPedido.getCantidad()),objPedido.getProveedor(),objPedido.getSucursal()};
                 try {
                     ComunicacionBD.subirBD("pedidos", subir);
                 } catch (SQLException ex) {

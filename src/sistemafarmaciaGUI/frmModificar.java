@@ -5,20 +5,48 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ButtonModel;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import sistemafarmacia.ComunicacionBD;
 import sistemafarmacia.Conexion;
 import sistemafarmacia.Pedidos;
+import sistemafarmaciaGUI.frmPedido;
 
 public class frmModificar extends javax.swing.JDialog {        
+    
+    private static final String tabla = "pedidos";
+    private static final String[] datosTabla = new String [] {"id","Producto", "Tipo", "Cantidad", "Proveedor","Sucursal" } ;
     frmPedido pedido;
     Pedidos objPedido;
+    String[] pedidos;
+    JTable tblPedidos;
 
-    public frmModificar(java.awt.Dialog parent, boolean modal) {
+    public frmModificar(java.awt.Dialog parent, boolean modal, String[] pedido, JTable tblPedidos) {
         super(parent, modal);
         initComponents();
-                        
-                                                                                  
+        
+        this.tblPedidos = tblPedidos;
+        this.pedidos = pedido;
+        
+        
+        
+        txtProducto.setText(pedidos[1]);
+        cmbTipo.setSelectedItem(pedidos[2]);
+        txtCantidad.setText(pedidos[3]);
+        
+        if(pedidos[4].equals("Medley"))
+            jrbProveedor1.setSelected(true);
+        else
+            jrbProveedor2.setSelected(true);;
+        
+        if(pedidos[5].equals("Las Palmas"))
+            cbxSucursal1.setSelected(true); 
+        else
+            cbxSucursal2.setSelected(true);
+        
+        
+                                                                          
     }
         
     /**
@@ -189,12 +217,120 @@ public class frmModificar extends javax.swing.JDialog {
     }//GEN-LAST:event_lblSalirMouseClicked
 
     private void btnAceptarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarMouseClicked
+       
         
+        
+        
+        
+        Pedidos objPedido = new Pedidos();
+        
+        
+        
+        if( txtProducto.getText().length() == 0 ) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Ingrese nombre del producto.",
+                    "Validación",
+                    JOptionPane.ERROR_MESSAGE);
+            txtProducto.requestFocus();
+            return;
+        }else {
+            String producto = txtProducto.getText();
+            objPedido.setNombreProducto(producto);            
+        }                
+        
+        if( (String)cmbTipo.getSelectedItem() == "Selecciona uno" ) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Seleccione un tipo de producto.",
+                    "Validación",
+                    JOptionPane.ERROR_MESSAGE);
+            cmbTipo.requestFocus();
+            return;
+        }else {
+            try {
+                String tipo = (String)cmbTipo.getSelectedItem();
+                objPedido.setTipoProducto(tipo);
+            } catch (Exception ex) {
+                Logger.getLogger(frmPedido.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        if( txtCantidad.getText().length() == 0  ) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Ingrese una cantidad.",
+                    "Validación",
+                    JOptionPane.ERROR_MESSAGE);
+            txtCantidad.requestFocus();
+            return;
+        }else {
+            try {
+                int cantidad = Integer.parseInt(txtCantidad.getText());
+                objPedido.setCantidad(cantidad); 
+            }catch(NumberFormatException ex) {
+                JOptionPane.showMessageDialog(
+                    this,
+                    "Ingrese una cantidad válida.",
+                    "Validación",
+                    JOptionPane.ERROR_MESSAGE);
+                txtCantidad.requestFocus();
+                return;
+            }
+                       
+        }
+        
+        if(jrbProveedor1.isSelected()) {
+            objPedido.setProveedor("Medley");
+        }else if(jrbProveedor2.isSelected()) {
+            objPedido.setProveedor("Biomep");            
+        }else {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Seleccione un proveedor.",
+                    "Validación",
+                    JOptionPane.ERROR_MESSAGE);   
+            return;
+        }
+                
+        if(cbxSucursal1.isSelected()) {
+            objPedido.setSucursal("Las Palmas");
+        }else if(cbxSucursal2.isSelected()) {
+            objPedido.setSucursal("Puerto México");
+        }else {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Seleccione una sucursal.",
+                    "Validación",
+                    JOptionPane.ERROR_MESSAGE);    
+            return;
+        }
+        
+        
+        try {
+           Conexion objConexion = new Conexion();                                       
+        
+            String[] subir = {objPedido.getNombreProducto(),objPedido.getTipoProducto(),String.valueOf(objPedido.getCantidad()),objPedido.getProveedor(),objPedido.getSucursal()};
+            ComunicacionBD.actualizarBD(tabla, subir, pedidos[0]);
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                    "¡Pedido editado correctamente! \n", "HECHO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            btnCancelarMouseClicked(evt);
+            
+            
+           /* frmTablaPedidos dialog = new frmTablaPedidos(null, true);
+            dialog.setLocationRelativeTo(this);
+            dialog.setVisible(true);
+           */ 
+            tblPedidos.setModel(new javax.swing.table.DefaultTableModel(
+                            ComunicacionBD.datosBD(tabla),datosTabla));
+        } catch (SQLException ex) {
+            Logger.getLogger(frmTablaPedidos.class.getName()).log(Level.SEVERE, null, ex);
+        } 
         
     }//GEN-LAST:event_btnAceptarMouseClicked
 
     private void btnCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseClicked
-        
+        lblSalirMouseClicked(evt);
         
     }//GEN-LAST:event_btnCancelarMouseClicked
 

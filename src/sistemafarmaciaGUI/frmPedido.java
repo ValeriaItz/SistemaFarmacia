@@ -246,9 +246,9 @@ public class frmPedido extends javax.swing.JFrame {
         
         Pedidos objPedido = new Pedidos();
         
-        int ID = (txtId.getText().isEmpty()) ?0: Integer.parseInt(txtId.getText());
+        /*int ID = (txtId.getText().isEmpty()) ? 0: Integer.parseInt(txtId.getText());
         objPedido.setId(ID);
-        
+        */
         if( txtProducto.getText().length() == 0 ) {
             JOptionPane.showMessageDialog(
                     this,
