@@ -9,6 +9,17 @@ import java.sql.Statement;
 
 public class ComunicacionBD {
     
+    public static boolean confirmarCredenciales(String tabla, String usuario, String contraseña)throws SQLException{
+        Conexion conn = new Conexion();
+        Connection reg = conn.getConnection();
+        Statement stm = reg.createStatement();
+        ResultSet resultado = stm.executeQuery("SELECT * FROM `"+tabla+"` WHERE `usuario` = '"+usuario+"' AND `contrasena` = '"+contraseña+"'");
+        if(resultado.next()) {
+            return true;
+        }else {
+            return false;
+        }
+    }
     
     public static String[][] datosBD(String tabla)throws SQLException{
         Conexion conn = new Conexion();

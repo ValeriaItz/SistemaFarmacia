@@ -45,3 +45,22 @@ INSERT INTO `pedidos` (`id`, `nombre_producto`, `tipo`, `cantidad`, `proveedor`,
 /*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;
+
+--
+-- Estructura de tabla para la tabla `usuarios`
+--
+
+CREATE TABLE IF NOT EXISTS `usuarios` (
+  `tipo_usuario` varchar(20) NOT NULL,
+  `usuario` varchar(50) NOT NULL,
+  `contrasena` varchar(50) NOT NULL,
+  PRIMARY KEY (`tipo_usuario`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `usuarios`
+--
+
+INSERT INTO `usuarios` (`tipo_usuario`, `usuario`, `contrasena`) VALUES
+('administrador', 'Valeria', 'valeria'),
+('empleado', 'Ricardo', 'ricardo');

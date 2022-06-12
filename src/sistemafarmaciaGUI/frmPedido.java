@@ -13,7 +13,7 @@ public class frmPedido extends javax.swing.JFrame {
 
     public frmPedido() {
         initComponents();   
-        //setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/imagenes/icon.png")));
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/imagenes/icon.png")));
     }
         
     /**

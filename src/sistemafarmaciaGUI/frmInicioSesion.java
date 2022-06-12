@@ -1,6 +1,11 @@
 package sistemafarmaciaGUI;
 
+import java.awt.Color;
 import java.awt.Toolkit;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import sistemafarmacia.ComunicacionBD;
 
 public class frmInicioSesion extends javax.swing.JFrame {
 
@@ -18,34 +23,161 @@ public class frmInicioSesion extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        panFondo = new javax.swing.JPanel();
+        txtUsuario = new javax.swing.JTextField();
+        btnAceptar = new javax.swing.JButton();
+        lblIconUser = new javax.swing.JLabel();
+        panSalir = new javax.swing.JPanel();
+        lblSalir = new javax.swing.JLabel();
+        txtContraseña = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 360, Short.MAX_VALUE)
+        panFondo.setBackground(new java.awt.Color(255, 255, 255));
+        panFondo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        txtUsuario.setFont(new java.awt.Font("Roboto Light", 0, 14)); // NOI18N
+        txtUsuario.setForeground(new java.awt.Color(153, 153, 153));
+        txtUsuario.setText("Usuario");
+        txtUsuario.setPreferredSize(new java.awt.Dimension(160, 30));
+        txtUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txtUsuarioMousePressed(evt);
+            }
+        });
+        panFondo.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 200, 160, 30));
+
+        btnAceptar.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        btnAceptar.setText("Aceptar");
+        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAceptarActionPerformed(evt);
+            }
+        });
+        panFondo.add(btnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 320, -1, 30));
+
+        lblIconUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/user.png"))); // NOI18N
+        panFondo.add(lblIconUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(115, 40, 130, 130));
+
+        panSalir.setBackground(new java.awt.Color(255, 255, 255));
+
+        lblSalir.setBackground(new java.awt.Color(255, 255, 255));
+        lblSalir.setFont(new java.awt.Font("Roboto", 0, 33)); // NOI18N
+        lblSalir.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblSalir.setText("x");
+        lblSalir.setPreferredSize(new java.awt.Dimension(24, 35));
+        lblSalir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblSalirMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblSalirMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblSalirMouseExited(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panSalirLayout = new javax.swing.GroupLayout(panSalir);
+        panSalir.setLayout(panSalirLayout);
+        panSalirLayout.setHorizontalGroup(
+            panSalirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lblSalir, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+        panSalirLayout.setVerticalGroup(
+            panSalirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panSalirLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(lblSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        panFondo.add(panSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 0, 40, -1));
+
+        txtContraseña.setForeground(new java.awt.Color(153, 153, 153));
+        txtContraseña.setText("**********");
+        txtContraseña.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txtContraseñaMousePressed(evt);
+            }
+        });
+        panFondo.add(txtContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 250, 160, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panFondo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panFondo, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void lblSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSalirMouseClicked
+        System.exit(0);
+    }//GEN-LAST:event_lblSalirMouseClicked
+
+    private void lblSalirMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSalirMouseEntered
+        panSalir.setBackground(Color.red);
+        lblSalir.setForeground(Color.white);
+    }//GEN-LAST:event_lblSalirMouseEntered
+
+    private void lblSalirMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSalirMouseExited
+        panSalir.setBackground(Color.white);
+        lblSalir.setForeground(Color.black);
+    }//GEN-LAST:event_lblSalirMouseExited
+
+    private void txtUsuarioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtUsuarioMousePressed
+        if(txtUsuario.getText().equals("Usuario")){
+            txtUsuario.setText("");
+            txtUsuario.setForeground(Color.black);
+        }
+        if(String.valueOf(txtContraseña.getPassword()).isEmpty()){
+            txtContraseña.setText("**********");
+            txtContraseña.setForeground(new Color(153,153,153));
+        }
+    }//GEN-LAST:event_txtUsuarioMousePressed
+
+    private void txtContraseñaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtContraseñaMousePressed
+        if(String.valueOf(txtContraseña.getPassword()).equals("**********")){
+            txtContraseña.setText("");
+            txtContraseña.setForeground(Color.black);
+        }
+        if(txtUsuario.getText().isEmpty()){
+            txtUsuario.setText("Usuario");
+            txtUsuario.setForeground(new Color(153,153,153));
+        }
+    }//GEN-LAST:event_txtContraseñaMousePressed
+
+    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
+        try {
+            String user = txtUsuario.getText();
+            String pass = txtContraseña.getText();
+            
+            if(user == "Usuario"){
+                javax.swing.JOptionPane.showMessageDialog(this, "Debes escribir tu usuario. \n", "Aviso", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            }
+            else{                
+                boolean resultado = ComunicacionBD.confirmarCredenciales("usuarios", user, pass);
+                
+                if(resultado) {
+                    setVisible(false);
+                    frmPedido frame = new frmPedido();
+                    frame.setLocationRelativeTo(null);
+                    frame.setVisible(true);
+                }else {
+                    javax.swing.JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos. \n", "Aviso", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                }                                
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(frmInicioSesion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnAceptarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -77,12 +209,20 @@ public class frmInicioSesion extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmInicioSesion().setVisible(true);
+                frmInicioSesion frminicio = new frmInicioSesion();
+                frminicio.setLocationRelativeTo(null);
+                frminicio.setVisible(true); 
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton btnAceptar;
+    private javax.swing.JLabel lblIconUser;
+    private javax.swing.JLabel lblSalir;
+    private javax.swing.JPanel panFondo;
+    private javax.swing.JPanel panSalir;
+    private javax.swing.JPasswordField txtContraseña;
+    private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 }
