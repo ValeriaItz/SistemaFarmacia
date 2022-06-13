@@ -16,9 +16,9 @@ import sistemafarmaciaGUI.frmPedido;
 public class frmAgregarUsuario extends javax.swing.JDialog {        
     
     private static final String tabla = "usuarios";
-    private static final String[] datosTabla = new String [] {"tipo_usuario", "usuario", "contrasena" } ;
+    private static final String[] datosTabla = new String [] {"id","tipo_usuario", "usuario", "contrasena" } ;
 
-    Pedidos objPedido;
+    
     String[] empleados;
     JTable tblUsuarios;
     boolean edicion = false;
@@ -31,21 +31,22 @@ public class frmAgregarUsuario extends javax.swing.JDialog {
         this.tblUsuarios = tblUsuarios;
         this.empleados = empleados;
                                              
-        txtUsuario.setText(empleados[1]);
-        txtContraseña.setText(empleados[2]);
+        txtUsuario.setText(empleados[2]);
+        txtContraseña.setText(empleados[3]);
         
-        if(empleados[0].equals("administrador")){
+        if(empleados[1].equals("administrador")){
             jrbTipoUsuario2.setSelected(true);
         }
         else
           jrbTipoUsuario1.setSelected(true);
     }
     
-    public frmAgregarUsuario(java.awt.Dialog parent, boolean modal, JTable tblUsuarios){
+    public frmAgregarUsuario(java.awt.Dialog parent, boolean modal, JTable tblUsuarios) {
         super(parent, modal);
         initComponents();
         
         this.tblUsuarios = tblUsuarios;
+        
         
         
         
@@ -243,9 +244,9 @@ public class frmAgregarUsuario extends javax.swing.JDialog {
         String[] subir = {tipo,user,pass};
         try {
          
-            if(edicion){
+            if(edicion == true){
             
-            ComunicacionBD.actualizarBDSinId(tabla, subir, user);
+            ComunicacionBD.actualizarBD(tabla, subir, empleados[0]);
             javax.swing.JOptionPane.showMessageDialog(this, 
                     "¡Empleado editado correctamente! \n", "HECHO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
             

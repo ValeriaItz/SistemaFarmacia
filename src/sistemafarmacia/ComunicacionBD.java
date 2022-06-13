@@ -96,6 +96,28 @@ public class ComunicacionBD {
                  +"` ("+ columnas +") VALUES ("+ datosSubir +");");
     }
     
+    public static void subirBDSinId(String tabla, String[] datos)throws SQLException{
+        Conexion conn = new Conexion();
+        Connection reg = conn.getConnection();
+        Statement stm = reg.createStatement();
+        
+        String[] datosBD = nombreColumnas(tabla);
+        String columnas = "";
+        for(int i=0; i<datosBD.length-1; i++){
+            columnas += "`"+ datosBD[i] +"`,";
+        }
+        columnas += "`"+ datosBD[datosBD.length-1] +"`";
+        
+        String datosSubir = "";
+        for(int i=0; i<datos.length-1; i++){
+            datosSubir += "'"+ datos[i] +"',";
+        }
+        datosSubir += "'"+ datos[datos.length-1] +"'";
+        
+        stm.executeUpdate("INSERT INTO `"+ tabla
+                 +"` ("+ columnas +") VALUES ("+ datosSubir +");");
+    }
+    
     public static void eliminarBD(String tabla, String id)throws SQLException{
         Conexion conn = new Conexion();
         Connection reg = conn.getConnection();
@@ -144,7 +166,7 @@ public class ComunicacionBD {
                 } ;
             case "usuarios":
                 return new String []{
-                  "tipo_usuario", "usuario", "contrasena"  
+                  "id", "tipo_usuario", "usuario", "contrasena"  
                 };
             default:
                 return new String[1];

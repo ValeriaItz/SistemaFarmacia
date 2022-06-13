@@ -17,7 +17,7 @@ public class frmTablaUsuarios extends javax.swing.JDialog {
     
     
     private static final String tabla = "usuarios";
-    private static final String[] datosTabla = new String [] { "tipo_usuario", "usuario", "contrasena" } ; 
+    private static final String[] datosTabla = new String [] { "id", "tipo_usuario", "usuario", "contrasena" } ; 
     
     public frmTablaUsuarios(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -224,13 +224,43 @@ public class frmTablaUsuarios extends javax.swing.JDialog {
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        
+        
         frmAgregarUsuario dialog = new frmAgregarUsuario(this, true, tblUsuarios);
         dialog.setLocationRelativeTo(this);
         dialog.setVisible(true);
+        
+        
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnEliminar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminar1ActionPerformed
-        // TODO add your handling code here:
+        try {
+            int idcell = tblUsuarios.getSelectedRow();
+            if(idcell <= -1){
+                javax.swing.JOptionPane.showMessageDialog(this, "Debes seleccionar el Empleado que deseas elminar. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            }
+            else{                
+            String list[][] = ComunicacionBD.datosBD(tabla);
+                
+                String id = list[idcell][0];
+                
+                if(id.isEmpty()){
+                    javax.swing.JOptionPane.showMessageDialog(this, "Debes seleccionar el Empleado que deseas elminar. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                }
+                else{
+                    
+                    int respuesta = JOptionPane.showConfirmDialog(this, "¿Seguro que quieres eliminar este empleado?", "Aviso", JOptionPane.OK_CANCEL_OPTION);
+                    if(respuesta == JOptionPane.OK_OPTION){
+                        ComunicacionBD.eliminarBD(tabla, id);
+                        javax.swing.JOptionPane.showMessageDialog(this, "¡Pedido eliminado con éxito! \n", "HECHO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                        tblUsuarios.setModel(new javax.swing.table.DefaultTableModel(
+                                ComunicacionBD.datosBD(tabla),datosTabla));
+                    }
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(frmTablaPedidos.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnEliminar1ActionPerformed
 
     /**

@@ -46,6 +46,8 @@ public class frmPedido extends javax.swing.JFrame {
         btnVerPedidos = new javax.swing.JButton();
         panEmpleados = new javax.swing.JPanel();
         lblEmpleados = new javax.swing.JLabel();
+        lblcerrarsesion = new javax.swing.JLabel();
+        lblCerrarSesion = new javax.swing.JLabel();
         lblTitulo = new javax.swing.JLabel();
         lblProducto = new javax.swing.JLabel();
         lblTipo = new javax.swing.JLabel();
@@ -116,38 +118,61 @@ public class frmPedido extends javax.swing.JFrame {
         panEmpleados.setLayout(panEmpleadosLayout);
         panEmpleadosLayout.setHorizontalGroup(
             panEmpleadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panEmpleadosLayout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panEmpleadosLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblEmpleados, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         panEmpleadosLayout.setVerticalGroup(
             panEmpleadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panEmpleadosLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(lblEmpleados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(panEmpleadosLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblEmpleados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        lblcerrarsesion.setText("Cerrar Sesión");
+
+        lblCerrarSesion.setText("Aqui la imagen");
+        lblCerrarSesion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblCerrarSesionMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout panFondo2Layout = new javax.swing.GroupLayout(panFondo2);
         panFondo2.setLayout(panFondo2Layout);
         panFondo2Layout.setHorizontalGroup(
             panFondo2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panFondo2Layout.createSequentialGroup()
-                .addGap(45, 45, 45)
-                .addComponent(btnVerPedidos)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(lblIconFarmacia)
+                .addGap(0, 30, Short.MAX_VALUE))
             .addGroup(panFondo2Layout.createSequentialGroup()
                 .addGroup(panFondo2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblIconFarmacia)
-                    .addComponent(panEmpleados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 30, Short.MAX_VALUE))
+                    .addGroup(panFondo2Layout.createSequentialGroup()
+                        .addGap(45, 45, 45)
+                        .addComponent(btnVerPedidos))
+                    .addGroup(panFondo2Layout.createSequentialGroup()
+                        .addGap(42, 42, 42)
+                        .addComponent(panEmpleados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panFondo2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblCerrarSesion))
+                    .addGroup(panFondo2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblcerrarsesion)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panFondo2Layout.setVerticalGroup(
             panFondo2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panFondo2Layout.createSequentialGroup()
-                .addGap(43, 43, 43)
+                .addContainerGap(9, Short.MAX_VALUE)
+                .addComponent(lblCerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblcerrarsesion)
+                .addGap(18, 18, 18)
                 .addComponent(panEmpleados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
+                .addGap(30, 30, 30)
                 .addComponent(lblIconFarmacia, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(97, 97, 97)
                 .addComponent(btnVerPedidos, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -292,8 +317,11 @@ public class frmPedido extends javax.swing.JFrame {
             String[][] datoAdmin =  ComunicacionBD.datosBD(tabla, "tipo_usuario", "administrador");
                         
             for(int i = 0; i<datoAdmin.length;i++){
-                return (user.equals(datoAdmin[i][1])) ? true: false;
-            }                   
+                
+                if(user.equals(datoAdmin[i][2]))
+                    return true;
+            } 
+            
             
         } catch (SQLException ex) {
             Logger.getLogger(frmPedido.class.getName()).log(Level.SEVERE, null, ex);
@@ -450,6 +478,15 @@ public class frmPedido extends javax.swing.JFrame {
     private void panEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panEmpleadosMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_panEmpleadosMouseClicked
+
+    private void lblCerrarSesionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCerrarSesionMouseClicked
+        /*
+        frmInicioSesion dialogo2 = new frmInicioSesion();
+        dialogo2.setVisible(true);
+        dialogo2.setLocationRelativeTo(this);
+        lblSalirMouseClicked(evt);
+        */
+    }//GEN-LAST:event_lblCerrarSesionMouseClicked
        
     public void borrarDatos() {
         txtProducto.setText("");
@@ -503,6 +540,7 @@ public class frmPedido extends javax.swing.JFrame {
     private javax.swing.JRadioButton jrbProveedor1;
     private javax.swing.JRadioButton jrbProveedor2;
     private javax.swing.JLabel lblCantidad;
+    private javax.swing.JLabel lblCerrarSesion;
     private javax.swing.JLabel lblEmpleados;
     private javax.swing.JLabel lblIconFarmacia;
     private javax.swing.JLabel lblProducto;
@@ -511,6 +549,7 @@ public class frmPedido extends javax.swing.JFrame {
     private javax.swing.JLabel lblSucursal;
     private javax.swing.JLabel lblTipo;
     private javax.swing.JLabel lblTitulo;
+    private javax.swing.JLabel lblcerrarsesion;
     private javax.swing.JPanel panEmpleados;
     private javax.swing.JPanel panFondo;
     private javax.swing.JPanel panFondo2;
