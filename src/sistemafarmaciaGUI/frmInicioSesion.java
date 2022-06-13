@@ -2,6 +2,7 @@ package sistemafarmaciaGUI;
 
 import java.awt.Color;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -11,6 +12,7 @@ public class frmInicioSesion extends javax.swing.JFrame {
 
     public frmInicioSesion() {
         initComponents();
+        
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/imagenes/icon.png")));
     }
 
@@ -41,9 +43,22 @@ public class frmInicioSesion extends javax.swing.JFrame {
         txtUsuario.setForeground(new java.awt.Color(153, 153, 153));
         txtUsuario.setText("Usuario");
         txtUsuario.setPreferredSize(new java.awt.Dimension(160, 30));
+        txtUsuario.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtUsuarioFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtUsuarioFocusLost(evt);
+            }
+        });
         txtUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 txtUsuarioMousePressed(evt);
+            }
+        });
+        txtUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtUsuarioKeyTyped(evt);
             }
         });
         panFondo.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 200, 160, 30));
@@ -96,9 +111,22 @@ public class frmInicioSesion extends javax.swing.JFrame {
 
         txtContraseña.setForeground(new java.awt.Color(153, 153, 153));
         txtContraseña.setText("**********");
+        txtContraseña.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtContraseñaFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtContraseñaFocusLost(evt);
+            }
+        });
         txtContraseña.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 txtContraseñaMousePressed(evt);
+            }
+        });
+        txtContraseña.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtContraseñaKeyTyped(evt);
             }
         });
         panFondo.add(txtContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 250, 160, 30));
@@ -132,25 +160,25 @@ public class frmInicioSesion extends javax.swing.JFrame {
     }//GEN-LAST:event_lblSalirMouseExited
 
     private void txtUsuarioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtUsuarioMousePressed
-        if(txtUsuario.getText().equals("Usuario")){
+        /*if(txtUsuario.getText().equals("Usuario")){
             txtUsuario.setText("");
             txtUsuario.setForeground(Color.black);
         }
         if(String.valueOf(txtContraseña.getPassword()).isEmpty()){
             txtContraseña.setText("**********");
             txtContraseña.setForeground(new Color(153,153,153));
-        }
+        }*/
     }//GEN-LAST:event_txtUsuarioMousePressed
 
     private void txtContraseñaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtContraseñaMousePressed
-        if(String.valueOf(txtContraseña.getPassword()).equals("**********")){
+       /* if(String.valueOf(txtContraseña.getPassword()).equals("**********")){
             txtContraseña.setText("");
             txtContraseña.setForeground(Color.black);
         }
         if(txtUsuario.getText().isEmpty()){
             txtUsuario.setText("Usuario");
             txtUsuario.setForeground(new Color(153,153,153));
-        }
+        }*/
     }//GEN-LAST:event_txtContraseñaMousePressed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
@@ -166,7 +194,7 @@ public class frmInicioSesion extends javax.swing.JFrame {
                 
                 if(resultado) {
                     setVisible(false);
-                    frmPedido frame = new frmPedido();
+                    frmPedido frame = new frmPedido(user);
                     frame.setLocationRelativeTo(null);
                     frame.setVisible(true);
                 }else {
@@ -178,6 +206,39 @@ public class frmInicioSesion extends javax.swing.JFrame {
             Logger.getLogger(frmInicioSesion.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnAceptarActionPerformed
+
+    private void txtContraseñaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtContraseñaKeyTyped
+        char tecla = evt.getKeyChar();
+        if(tecla == KeyEvent.VK_ENTER)
+            btnAceptar.doClick();
+    }//GEN-LAST:event_txtContraseñaKeyTyped
+
+    private void txtUsuarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuarioKeyTyped
+       char tecla = evt.getKeyChar();
+        if(tecla == KeyEvent.VK_ENTER)
+            btnAceptar.doClick();
+    }//GEN-LAST:event_txtUsuarioKeyTyped
+
+    private void txtUsuarioFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUsuarioFocusGained
+        if(txtUsuario.getText().equals("Usuario")) 
+        txtUsuario.setText("");
+         
+    }//GEN-LAST:event_txtUsuarioFocusGained
+
+    private void txtUsuarioFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUsuarioFocusLost
+        if(txtUsuario.getText().equals(""))
+            txtUsuario.setText("Usuario");
+    }//GEN-LAST:event_txtUsuarioFocusLost
+
+    private void txtContraseñaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtContraseñaFocusGained
+        if(txtContraseña.getText().equals("**********"))
+        txtContraseña.setText("");
+    }//GEN-LAST:event_txtContraseñaFocusGained
+
+    private void txtContraseñaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtContraseñaFocusLost
+        if(txtContraseña.getText().equals(""))
+            txtContraseña.setText("**********");
+    }//GEN-LAST:event_txtContraseñaFocusLost
 
     /**
      * @param args the command line arguments

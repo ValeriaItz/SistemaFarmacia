@@ -46,6 +46,32 @@ public class ComunicacionBD {
         
         return list;
     }   
+    
+    public static String[][] datosBD(String tabla, String columna,String comparar)throws SQLException{
+        Conexion conn = new Conexion();
+        Connection reg = conn.getConnection();
+        Statement stm = reg.createStatement();
+        
+        String[] datosBD = nombreColumnas(tabla);
+        
+        ResultSet counter = stm.executeQuery("SELECT COUNT(*) AS contar FROM `"+ tabla +"`  WHERE "+ columna +" LIKE '%"+comparar+"%'");
+        counter.next();
+        int count = counter.getInt("contar");
+        counter.close();
+
+        String list[][] = new String[count][datosBD.length];
+        
+        ResultSet re = stm.executeQuery("SELECT * FROM `"+ tabla +"`  WHERE "+ columna +" LIKE '%"+comparar+"%'");
+        for(int i = 0; i < count; i++){
+            re.next();
+            for(int c = 0; c < datosBD.length; c++){
+                list[i][c] = re.getString(datosBD[c]);
+            }
+        }
+        re.close();
+        
+        return list;
+    }
 
     
     public static void subirBD(String tabla, String[] datos)throws SQLException{
@@ -93,7 +119,21 @@ public class ComunicacionBD {
         stm.executeUpdate("UPDATE "+ tabla +" SET " + res + " WHERE `id` = '" + id + "';");
     }
     
-
+    public static void actualizarBDSinId(String tabla, String[] datos, String usuario)throws SQLException{
+        Conexion conn = new Conexion();
+        Connection reg = conn.getConnection();
+        Statement stm = reg.createStatement();
+        
+        String res = "";
+        
+        String[] datosBD = nombreColumnas(tabla);
+        for(int i=1; i<datosBD.length-1; i++){
+            res += "`"+ datosBD[i-1] + "` = '" + datos[i-1] +"', ";
+        }
+        res += "`"+ datosBD[datosBD.length-1] + "` = '" + datos[datos.length-1] +"' ";
+        
+        stm.executeUpdate("UPDATE "+ tabla +" SET " + res + " WHERE `usuario` = '" + usuario + "';");
+    }
     
     public static String[] nombreColumnas(String nombre){
         switch(nombre){
@@ -101,7 +141,11 @@ public class ComunicacionBD {
                 return new String [] {
                     "id","nombre_producto", "tipo", "cantidad", "proveedor",
                     "sucursal"
-                } ; 
+                } ;
+            case "usuarios":
+                return new String []{
+                  "tipo_usuario", "usuario", "contrasena"  
+                };
             default:
                 return new String[1];
         }

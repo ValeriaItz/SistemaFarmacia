@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import sistemafarmacia.ComunicacionBD;
@@ -15,11 +16,8 @@ import sistemafarmacia.Pedidos;
 public class frmTablaUsuarios extends javax.swing.JDialog {
     
     
-    private static final String tabla = "pedidos";
-    private static final String[] datosTabla = new String [] {
-            "id","Producto", "Tipo", "Cantidad", "Proveedor",
-                    "Sucursal"
-            } ; 
+    private static final String tabla = "usuarios";
+    private static final String[] datosTabla = new String [] { "tipo_usuario", "usuario", "contrasena" } ; 
     
     public frmTablaUsuarios(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -52,8 +50,9 @@ public class frmTablaUsuarios extends javax.swing.JDialog {
         panSalir = new javax.swing.JPanel();
         lblSalir = new javax.swing.JLabel();
         panFondo2 = new javax.swing.JPanel();
+        btnAgregar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
-        btnEliminar = new javax.swing.JButton();
+        btnEliminar1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
@@ -111,7 +110,7 @@ public class frmTablaUsuarios extends javax.swing.JDialog {
         );
         panSalirLayout.setVerticalGroup(
             panSalirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblSalir, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+            .addComponent(lblSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 40, Short.MAX_VALUE)
         );
 
         panFondo.add(panSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 0, -1, -1));
@@ -119,21 +118,36 @@ public class frmTablaUsuarios extends javax.swing.JDialog {
         panFondo2.setBackground(new java.awt.Color(252, 215, 112));
         panFondo2.setPreferredSize(new java.awt.Dimension(210, 500));
 
+        btnAgregar.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        btnAgregar.setText("Agregar");
+        btnAgregar.setPreferredSize(new java.awt.Dimension(100, 25));
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panFondo2Layout = new javax.swing.GroupLayout(panFondo2);
         panFondo2.setLayout(panFondo2Layout);
         panFondo2Layout.setHorizontalGroup(
             panFondo2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 210, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panFondo2Layout.createSequentialGroup()
+                .addContainerGap(77, Short.MAX_VALUE)
+                .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33))
         );
         panFondo2Layout.setVerticalGroup(
             panFondo2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 500, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panFondo2Layout.createSequentialGroup()
+                .addContainerGap(440, Short.MAX_VALUE)
+                .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30))
         );
 
         panFondo.add(panFondo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         btnModificar.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        btnModificar.setText("Modificar");
+        btnModificar.setText("Editar");
         btnModificar.setPreferredSize(new java.awt.Dimension(100, 25));
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -142,15 +156,15 @@ public class frmTablaUsuarios extends javax.swing.JDialog {
         });
         panFondo.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 440, -1, 30));
 
-        btnEliminar.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        btnEliminar.setText("Eliminar");
-        btnEliminar.setPreferredSize(new java.awt.Dimension(100, 25));
-        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+        btnEliminar1.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        btnEliminar1.setText("Eliminar");
+        btnEliminar1.setPreferredSize(new java.awt.Dimension(100, 25));
+        btnEliminar1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarActionPerformed(evt);
+                btnEliminar1ActionPerformed(evt);
             }
         });
-        panFondo.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 440, -1, 30));
+        panFondo.add(btnEliminar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 440, -1, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -185,7 +199,7 @@ public class frmTablaUsuarios extends javax.swing.JDialog {
         try {
             int idcell = tblUsuarios.getSelectedRow();
             if(idcell <= -1){
-                javax.swing.JOptionPane.showMessageDialog(this, "Debes seleccionar el pedido que deseas modificar. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                javax.swing.JOptionPane.showMessageDialog(this, "Debes seleccionar el empleado que deseas editar. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
             }
             else{
 
@@ -193,10 +207,10 @@ public class frmTablaUsuarios extends javax.swing.JDialog {
                 String id = list[idcell][0];
                 
                 if(id.isEmpty()){
-                    javax.swing.JOptionPane.showMessageDialog(this, "Debes seleccionar el pedido que deseas modificar. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                    javax.swing.JOptionPane.showMessageDialog(this, "Debes seleccionar el empleado que deseas editar. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
                 }
                 else{
-                    frmModificar dialog = new frmModificar(this, true, list[idcell], tblUsuarios);
+                    frmAgregarUsuario dialog = new frmAgregarUsuario(this, true, list[idcell], tblUsuarios);
                     dialog.setLocationRelativeTo(this);
                     dialog.setVisible(true);
                     
@@ -209,32 +223,15 @@ public class frmTablaUsuarios extends javax.swing.JDialog {
         
     }//GEN-LAST:event_btnModificarActionPerformed
 
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        try {
-            int idcell = tblUsuarios.getSelectedRow();
-            if(idcell <= -1){
-                javax.swing.JOptionPane.showMessageDialog(this, "Debes seleccionar el pedido que deseas elminar. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-            }
-            else{                
-            String list[][] = ComunicacionBD.datosBD(tabla);
-                
-                String id = list[idcell][0];
-                
-                if(id.isEmpty()){
-                    javax.swing.JOptionPane.showMessageDialog(this, "Debes seleccionar el pedido que deseas elminar. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-                }
-                else{
-                    ComunicacionBD.eliminarBD(tabla, id);
-                    javax.swing.JOptionPane.showMessageDialog(this, "¡Pedido eliminado con éxito! \n", "HECHO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-                    tblUsuarios.setModel(new javax.swing.table.DefaultTableModel(
-                            ComunicacionBD.datosBD(tabla),datosTabla));
-                   
-                }
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(frmTablaUsuarios.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_btnEliminarActionPerformed
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        frmAgregarUsuario dialog = new frmAgregarUsuario(this, true, tblUsuarios);
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void btnEliminar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminar1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEliminar1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -293,7 +290,8 @@ public class frmTablaUsuarios extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnAgregar;
+    private javax.swing.JButton btnEliminar1;
     private javax.swing.JButton btnModificar;
     private javax.swing.JLabel lblSalir;
     private javax.swing.JLabel lblTitulo;

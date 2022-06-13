@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import sistemafarmacia.ComunicacionBD;
@@ -224,11 +225,14 @@ public class frmTablaPedidos extends javax.swing.JDialog {
                     javax.swing.JOptionPane.showMessageDialog(this, "Debes seleccionar el pedido que deseas elminar. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
                 }
                 else{
-                    ComunicacionBD.eliminarBD(tabla, id);
-                    javax.swing.JOptionPane.showMessageDialog(this, "¡Pedido eliminado con éxito! \n", "HECHO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-                    tblPedidos.setModel(new javax.swing.table.DefaultTableModel(
-                            ComunicacionBD.datosBD(tabla),datosTabla));
-                   
+                    
+                    int respuesta = JOptionPane.showConfirmDialog(this, "¿Seguro que quieres eliminar este pedido?", "Aviso", JOptionPane.OK_CANCEL_OPTION);
+                    if(respuesta == JOptionPane.OK_OPTION){
+                        ComunicacionBD.eliminarBD(tabla, id);
+                        javax.swing.JOptionPane.showMessageDialog(this, "¡Pedido eliminado con éxito! \n", "HECHO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                        tblPedidos.setModel(new javax.swing.table.DefaultTableModel(
+                                ComunicacionBD.datosBD(tabla),datosTabla));
+                    }
                 }
             }
         } catch (SQLException ex) {

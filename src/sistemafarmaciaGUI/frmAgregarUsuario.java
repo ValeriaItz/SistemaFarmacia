@@ -15,28 +15,40 @@ import sistemafarmaciaGUI.frmPedido;
 
 public class frmAgregarUsuario extends javax.swing.JDialog {        
     
-    private static final String tabla = "pedidos";
-    private static final String[] datosTabla = new String [] {"id","Producto", "Tipo", "Cantidad", "Proveedor","Sucursal" } ;
-    frmPedido pedido;
-    Pedidos objPedido;
-    String[] pedidos;
-    JTable tblPedidos;
+    private static final String tabla = "usuarios";
+    private static final String[] datosTabla = new String [] {"tipo_usuario", "usuario", "contrasena" } ;
 
-    public frmAgregarUsuario(java.awt.Dialog parent, boolean modal, String[] pedido, JTable tblPedidos) {
+    Pedidos objPedido;
+    String[] empleados;
+    JTable tblUsuarios;
+    boolean edicion = false;
+    
+    public frmAgregarUsuario(java.awt.Dialog parent, boolean modal, String[] empleados, JTable tblUsuarios) {
         super(parent, modal);
         initComponents();
         
-        this.tblPedidos = tblPedidos;
-        this.pedidos = pedido;
+        this.edicion = true;
+        this.tblUsuarios = tblUsuarios;
+        this.empleados = empleados;
+                                             
+        txtUsuario.setText(empleados[1]);
+        txtContraseña.setText(empleados[2]);
         
-        
-        
-        txtContraseña.setText(pedidos[1]);        
-        
-        if(pedidos[4].equals("Medley"))
-            jrbTipoUsuario1.setSelected(true);
+        if(empleados[0].equals("administrador")){
+            jrbTipoUsuario2.setSelected(true);
+        }
         else
-            jrbTipoUsuario2.setSelected(true);;                                                                                                          
+          jrbTipoUsuario1.setSelected(true);
+    }
+    
+    public frmAgregarUsuario(java.awt.Dialog parent, boolean modal, JTable tblUsuarios){
+        super(parent, modal);
+        initComponents();
+        
+        this.tblUsuarios = tblUsuarios;
+        
+        
+        
     }
         
     /**
@@ -185,55 +197,69 @@ public class frmAgregarUsuario extends javax.swing.JDialog {
     }//GEN-LAST:event_lblSalirMouseClicked
 
     private void btnAceptarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarMouseClicked
-                                       
-        Pedidos objPedido = new Pedidos();
-                        
+                         
+        String tipo = "";
+        String user = "";
+        String pass = "";
+        
+        if( txtUsuario.getText().length() == 0 ) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Ingrese un nombre de usuario.",
+                    "Validación",
+                    JOptionPane.ERROR_MESSAGE);
+            txtUsuario.requestFocus();
+            return;
+        }else {
+            user = txtUsuario.getText();
+                                   
+        }
         if( txtContraseña.getText().length() == 0 ) {
             JOptionPane.showMessageDialog(
                     this,
-                    "Ingrese nombre del producto.",
+                    "Ingrese una contraseña.",
                     "Validación",
                     JOptionPane.ERROR_MESSAGE);
             txtContraseña.requestFocus();
             return;
         }else {
-            String producto = txtContraseña.getText();
-            objPedido.setNombreProducto(producto);            
+            pass = txtContraseña.getText();
+                                    
         }                
-                
-                
-        
+                    
         if(jrbTipoUsuario1.isSelected()) {
-            objPedido.setProveedor("Medley");
+            tipo = "empleado";
         }else if(jrbTipoUsuario2.isSelected()) {
-            objPedido.setProveedor("Biomep");            
+            tipo = "administrador";            
         }else {
             JOptionPane.showMessageDialog(
                     this,
-                    "Seleccione un proveedor.",
+                    "Seleccione un tipo de usuario.",
                     "Validación",
                     JOptionPane.ERROR_MESSAGE);   
             return;
         }
-                        
-        
-        
+           
+        String[] subir = {tipo,user,pass};
         try {
-           Conexion objConexion = new Conexion();                                       
-        
-            String[] subir = {objPedido.getNombreProducto(),objPedido.getTipoProducto(),String.valueOf(objPedido.getCantidad()),objPedido.getProveedor(),objPedido.getSucursal()};
-            ComunicacionBD.actualizarBD(tabla, subir, pedidos[0]);
+         
+            if(edicion){
+            
+            ComunicacionBD.actualizarBDSinId(tabla, subir, user);
             javax.swing.JOptionPane.showMessageDialog(this, 
-                    "¡Pedido editado correctamente! \n", "HECHO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                    "¡Empleado editado correctamente! \n", "HECHO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            
+            }
+            else{
+               ComunicacionBD.subirBD(tabla, subir);
+               javax.swing.JOptionPane.showMessageDialog(this, 
+                    "¡Empleado agregado correctamente! \n", "HECHO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            }
+            
             btnCancelarMouseClicked(evt);
-            
-            
-           /* frmTablaPedidos dialog = new frmTablaPedidos(null, true);
-            dialog.setLocationRelativeTo(this);
-            dialog.setVisible(true);
-           */ 
-            tblPedidos.setModel(new javax.swing.table.DefaultTableModel(
+            tblUsuarios.setModel(new javax.swing.table.DefaultTableModel(
                             ComunicacionBD.datosBD(tabla),datosTabla));
+            
         } catch (SQLException ex) {
             Logger.getLogger(frmTablaPedidos.class.getName()).log(Level.SEVERE, null, ex);
         } 

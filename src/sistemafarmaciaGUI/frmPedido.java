@@ -3,22 +3,37 @@ package sistemafarmaciaGUI;
 import java.awt.Color;
 import java.awt.Toolkit;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import sistemafarmacia.ComunicacionBD;
 import sistemafarmacia.Conexion;
 import sistemafarmacia.Pedidos;
 
 public class frmPedido extends javax.swing.JFrame {
 
-    public frmPedido() {
-        initComponents();   
+    String tabla = "usuarios";
+    String user;
+    public frmPedido(String user) {
+        initComponents(); 
+        
+        this.user = user;
+        if(!esAdmin(user)){
+            panEmpleados.setEnabled(true);
+            panEmpleados.setOpaque(false);
+            lblEmpleados.setForeground(new Color(252,215,112));
+        }
+        esAdmin(user);
+        
+        
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/imagenes/icon.png")));
     }
+
+    private frmPedido() {
+    }
         
-    /**
-     * This method is called from within the constructor to initialize the form.
-     */
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -29,6 +44,8 @@ public class frmPedido extends javax.swing.JFrame {
         panFondo2 = new javax.swing.JPanel();
         lblIconFarmacia = new javax.swing.JLabel();
         btnVerPedidos = new javax.swing.JButton();
+        panEmpleados = new javax.swing.JPanel();
+        lblEmpleados = new javax.swing.JLabel();
         lblTitulo = new javax.swing.JLabel();
         lblProducto = new javax.swing.JLabel();
         lblTipo = new javax.swing.JLabel();
@@ -71,26 +88,68 @@ public class frmPedido extends javax.swing.JFrame {
             }
         });
 
+        panEmpleados.setBackground(new java.awt.Color(255, 255, 255));
+        panEmpleados.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                panEmpleadosMouseClicked(evt);
+            }
+        });
+
+        lblEmpleados.setBackground(new java.awt.Color(255, 255, 255));
+        lblEmpleados.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        lblEmpleados.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblEmpleados.setText("Empleados");
+        lblEmpleados.setPreferredSize(new java.awt.Dimension(24, 35));
+        lblEmpleados.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblEmpleadosMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblEmpleadosMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblEmpleadosMouseExited(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panEmpleadosLayout = new javax.swing.GroupLayout(panEmpleados);
+        panEmpleados.setLayout(panEmpleadosLayout);
+        panEmpleadosLayout.setHorizontalGroup(
+            panEmpleadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panEmpleadosLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblEmpleados, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        panEmpleadosLayout.setVerticalGroup(
+            panEmpleadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panEmpleadosLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(lblEmpleados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
         javax.swing.GroupLayout panFondo2Layout = new javax.swing.GroupLayout(panFondo2);
         panFondo2.setLayout(panFondo2Layout);
         panFondo2Layout.setHorizontalGroup(
             panFondo2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panFondo2Layout.createSequentialGroup()
+                .addGap(45, 45, 45)
+                .addComponent(btnVerPedidos)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(panFondo2Layout.createSequentialGroup()
                 .addGroup(panFondo2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panFondo2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(lblIconFarmacia))
-                    .addGroup(panFondo2Layout.createSequentialGroup()
-                        .addGap(45, 45, 45)
-                        .addComponent(btnVerPedidos)))
-                .addContainerGap(20, Short.MAX_VALUE))
+                    .addComponent(lblIconFarmacia)
+                    .addComponent(panEmpleados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 30, Short.MAX_VALUE))
         );
         panFondo2Layout.setVerticalGroup(
             panFondo2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panFondo2Layout.createSequentialGroup()
-                .addContainerGap(157, Short.MAX_VALUE)
+                .addGap(43, 43, 43)
+                .addComponent(panEmpleados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
                 .addComponent(lblIconFarmacia, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(88, 88, 88)
+                .addGap(97, 97, 97)
                 .addComponent(btnVerPedidos, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30))
         );
@@ -227,6 +286,22 @@ public class frmPedido extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public boolean esAdmin(String user){
+        
+        try {
+            String[][] datoAdmin =  ComunicacionBD.datosBD(tabla, "tipo_usuario", "administrador");
+                        
+            for(int i = 0; i<datoAdmin.length;i++){
+                return (user.equals(datoAdmin[i][1])) ? true: false;
+            }                   
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(frmPedido.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    
+    
     private void lblSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSalirMouseClicked
         System.exit(0);
     }//GEN-LAST:event_lblSalirMouseClicked
@@ -356,6 +431,25 @@ public class frmPedido extends javax.swing.JFrame {
         dialog.setLocationRelativeTo(this);
         dialog.setVisible(true);
     }//GEN-LAST:event_btnVerPedidosActionPerformed
+
+    private void lblEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEmpleadosMouseClicked
+        frmTablaUsuarios dialogo = new frmTablaUsuarios(this, true);
+        dialogo.setLocationRelativeTo(this);
+        dialogo.setVisible(true);
+        
+    }//GEN-LAST:event_lblEmpleadosMouseClicked
+
+    private void lblEmpleadosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEmpleadosMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lblEmpleadosMouseEntered
+
+    private void lblEmpleadosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEmpleadosMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lblEmpleadosMouseExited
+
+    private void panEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panEmpleadosMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_panEmpleadosMouseClicked
        
     public void borrarDatos() {
         txtProducto.setText("");
@@ -409,6 +503,7 @@ public class frmPedido extends javax.swing.JFrame {
     private javax.swing.JRadioButton jrbProveedor1;
     private javax.swing.JRadioButton jrbProveedor2;
     private javax.swing.JLabel lblCantidad;
+    private javax.swing.JLabel lblEmpleados;
     private javax.swing.JLabel lblIconFarmacia;
     private javax.swing.JLabel lblProducto;
     private javax.swing.JLabel lblProveedor;
@@ -416,6 +511,7 @@ public class frmPedido extends javax.swing.JFrame {
     private javax.swing.JLabel lblSucursal;
     private javax.swing.JLabel lblTipo;
     private javax.swing.JLabel lblTitulo;
+    private javax.swing.JPanel panEmpleados;
     private javax.swing.JPanel panFondo;
     private javax.swing.JPanel panFondo2;
     private javax.swing.JPanel panSalir;
