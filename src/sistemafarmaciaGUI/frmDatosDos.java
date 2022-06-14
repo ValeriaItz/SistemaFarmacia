@@ -2,29 +2,45 @@ package sistemafarmaciaGUI;
 
 import java.awt.Color;
 import java.sql.SQLException;
+import static java.util.Collections.list;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
 import sistemafarmacia.ComunicacionBD;
 import sistemafarmacia.Conexion;
 import sistemafarmacia.Pedidos;
 
-public class frmDatos extends javax.swing.JDialog {        
+public class frmDatosDos extends javax.swing.JDialog {        
     frmPedido pedido;
     Pedidos objPedido;
+    
+    //private static final String tabla = "pedidos";
+    private static final String[] columnasTabla = new String [] {
+            "Producto", "Tipo", "Cantidad"
+            } ; 
+    private static final String[] datosTabla = new String [] {} ; 
 
-    public frmDatos(java.awt.Frame parent, boolean modal, Pedidos objPedido) {
+    public frmDatosDos(java.awt.Frame parent, boolean modal, Pedidos objPedido) {
         super(parent, modal);
         initComponents();
         
         this.objPedido = objPedido;                
         
-        txtProducto.setText(objPedido.getNombreProducto());
-        txtTipo.setText(objPedido.getTipoProducto());
-        txtCantidad.setText(String.valueOf(objPedido.getCantidad()));
+        //txtProducto.setText(objPedido.getNombreProducto());
+        //txtTipo.setText(objPedido.getTipoProducto());
+        //txtCantidad.setText(String.valueOf(objPedido.getCantidad()));
         txtProveedor.setText(objPedido.getProveedor());
-        txtSucursal.setText(objPedido.getSucursal());                                                                            
+        txtSucursal.setText(objPedido.getSucursal());
+        
+        this.tblProductos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+                
+        for(int columna = 0; columna < datosTabla.length; columna++){
+            //list[i][columna] = re.getString(datosTabla[columna]);
+        }
+        
+        
     }
         
     /**
@@ -41,20 +57,16 @@ public class frmDatos extends javax.swing.JDialog {
         panFondo2 = new javax.swing.JPanel();
         lblIconFarmacia = new javax.swing.JLabel();
         lblTitulo = new javax.swing.JLabel();
-        lblProducto = new javax.swing.JLabel();
-        lblTipo = new javax.swing.JLabel();
-        lblCantidad = new javax.swing.JLabel();
         lblProveedor = new javax.swing.JLabel();
         lblSucursal = new javax.swing.JLabel();
         txtSucursal = new javax.swing.JTextField();
-        txtProducto = new javax.swing.JTextField();
-        txtTipo = new javax.swing.JTextField();
-        txtCantidad = new javax.swing.JTextField();
         txtProveedor = new javax.swing.JTextField();
         btnCancelar = new javax.swing.JButton();
         btnAceptar = new javax.swing.JButton();
         panSalir = new javax.swing.JPanel();
         lblSalir = new javax.swing.JLabel();
+        scpProductos = new javax.swing.JScrollPane();
+        tblProductos = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
@@ -87,47 +99,23 @@ public class frmDatos extends javax.swing.JDialog {
 
         lblTitulo.setFont(new java.awt.Font("Roboto Black", 1, 24)); // NOI18N
         lblTitulo.setText("Datos Pedido");
-        panFondo.add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 50, -1, -1));
-
-        lblProducto.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        lblProducto.setText("Producto:");
-        panFondo.add(lblProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 110, -1, -1));
-
-        lblTipo.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        lblTipo.setText("Tipo:");
-        panFondo.add(lblTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 160, -1, -1));
-
-        lblCantidad.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        lblCantidad.setText("Cantidad:");
-        panFondo.add(lblCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 210, -1, -1));
+        panFondo.add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 20, -1, -1));
 
         lblProveedor.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         lblProveedor.setText("Proveedor:");
-        panFondo.add(lblProveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 260, -1, 20));
+        panFondo.add(lblProveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 80, -1, 20));
 
         lblSucursal.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         lblSucursal.setText("Sucursal:");
-        panFondo.add(lblSucursal, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 310, -1, -1));
+        panFondo.add(lblSucursal, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 130, -1, -1));
 
         txtSucursal.setEditable(false);
         txtSucursal.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
-        panFondo.add(txtSucursal, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 300, 190, 30));
-
-        txtProducto.setEditable(false);
-        txtProducto.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
-        panFondo.add(txtProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 100, 190, 30));
-
-        txtTipo.setEditable(false);
-        txtTipo.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
-        panFondo.add(txtTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 150, 190, 30));
-
-        txtCantidad.setEditable(false);
-        txtCantidad.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
-        panFondo.add(txtCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 200, 190, 30));
+        panFondo.add(txtSucursal, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 120, 190, 30));
 
         txtProveedor.setEditable(false);
         txtProveedor.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
-        panFondo.add(txtProveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 250, 190, 30));
+        panFondo.add(txtProveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 70, 190, 30));
 
         btnCancelar.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         btnCancelar.setText("Cancelar");
@@ -136,7 +124,7 @@ public class frmDatos extends javax.swing.JDialog {
                 btnCancelarMouseClicked(evt);
             }
         });
-        panFondo.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 360, -1, 30));
+        panFondo.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 370, -1, 30));
 
         btnAceptar.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         btnAceptar.setText("Aceptar");
@@ -145,7 +133,7 @@ public class frmDatos extends javax.swing.JDialog {
                 btnAceptarMouseClicked(evt);
             }
         });
-        panFondo.add(btnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 360, -1, 30));
+        panFondo.add(btnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 370, -1, 30));
 
         lblSalir.setFont(new java.awt.Font("Roboto", 0, 33)); // NOI18N
         lblSalir.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -175,6 +163,31 @@ public class frmDatos extends javax.swing.JDialog {
         );
 
         panFondo.add(panSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 0, 40, 40));
+
+        tblProductos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Producto", "Tipo", "Cantidad"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblProductos.setMinimumSize(new java.awt.Dimension(301, 64));
+        tblProductos.setPreferredSize(new java.awt.Dimension(301, 64));
+        scpProductos.setViewportView(tblProductos);
+
+        panFondo.add(scpProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 170, 300, 170));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -211,7 +224,8 @@ public class frmDatos extends javax.swing.JDialog {
                     "Pedido registrado exitosamente.",
                     "Aviso",
                     JOptionPane.INFORMATION_MESSAGE);
-        dispose();         
+        
+        dispose();                 
     }//GEN-LAST:event_btnAceptarMouseClicked
 
     private void btnCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseClicked
@@ -258,14 +272,29 @@ public class frmDatos extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frmDatos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmDatosDos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frmDatos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmDatosDos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frmDatos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmDatosDos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frmDatos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmDatosDos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+
+        /* Create and display the dialog 
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                ArrayList datosPedido = null;
+                frmDatos dialog = new frmDatos(new javax.swing.JFrame(), true, ArrayList datosPedido);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
+            }
         //</editor-fold>
 
         /* Create and display the dialog 
@@ -287,22 +316,18 @@ public class frmDatos extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JLabel lblCantidad;
     private javax.swing.JLabel lblIconFarmacia;
-    private javax.swing.JLabel lblProducto;
     private javax.swing.JLabel lblProveedor;
     private javax.swing.JLabel lblSalir;
     private javax.swing.JLabel lblSucursal;
-    private javax.swing.JLabel lblTipo;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JPanel panFondo;
     private javax.swing.JPanel panFondo2;
     private javax.swing.JPanel panSalir;
-    private javax.swing.JTextField txtCantidad;
-    public javax.swing.JTextField txtProducto;
+    private javax.swing.JScrollPane scpProductos;
+    private javax.swing.JTable tblProductos;
     private javax.swing.JTextField txtProducto3;
     private javax.swing.JTextField txtProveedor;
     private javax.swing.JTextField txtSucursal;
-    private javax.swing.JTextField txtTipo;
     // End of variables declaration//GEN-END:variables
 }

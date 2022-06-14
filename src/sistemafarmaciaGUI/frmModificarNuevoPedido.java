@@ -13,7 +13,7 @@ import sistemafarmacia.Conexion;
 import sistemafarmacia.Pedidos;
 import sistemafarmaciaGUI.frmPedido;
 
-public class frmModificar extends javax.swing.JDialog {        
+public class frmModificarNuevoPedido extends javax.swing.JDialog {        
     
     private static final String tabla = "pedidos";
     private static final String[] datosTabla = new String [] {"id","Producto", "Tipo", "Cantidad", "Proveedor","Sucursal" } ;
@@ -22,7 +22,7 @@ public class frmModificar extends javax.swing.JDialog {
     String[] pedidos;
     JTable tblPedidos;
 
-    public frmModificar(java.awt.Dialog parent, boolean modal, String[] pedido, JTable tblPedidos) {
+    public frmModificarNuevoPedido(java.awt.Dialog parent, boolean modal, String[] pedido, JTable tblPedidos) {
         super(parent, modal);
         initComponents();
         
@@ -81,7 +81,6 @@ public class frmModificar extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(500, 500));
 
         panFondo.setBackground(new java.awt.Color(255, 255, 255));
         panFondo.setMinimumSize(new java.awt.Dimension(500, 500));
@@ -374,14 +373,44 @@ public class frmModificar extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frmModificar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmModificarNuevoPedido.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frmModificar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmModificarNuevoPedido.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frmModificar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmModificarNuevoPedido.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frmModificar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmModificarNuevoPedido.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+
+        /* Create and display the dialog 
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                ArrayList datosPedido = null;
+                frmDatos dialog = new frmDatos(new javax.swing.JFrame(), true, ArrayList datosPedido);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
+            }
+        //</editor-fold>
+
+        /* Create and display the dialog 
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                ArrayList datosPedido = null;
+                frmDatos dialog = new frmDatos(new javax.swing.JFrame(), true, ArrayList datosPedido);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
+            }
         //</editor-fold>
 
         /* Create and display the dialog 

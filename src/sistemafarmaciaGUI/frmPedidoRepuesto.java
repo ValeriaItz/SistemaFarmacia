@@ -11,11 +11,12 @@ import sistemafarmacia.ComunicacionBD;
 import sistemafarmacia.Conexion;
 import sistemafarmacia.Pedidos;
 
-public class frmPedido extends javax.swing.JFrame {
+public class frmPedidoRepuesto extends javax.swing.JFrame {
 
     String tabla = "usuarios";
     String user;
-    public frmPedido(String user) {
+    
+    public frmPedidoRepuesto(String user) {
         initComponents(); 
         
         this.user = user;
@@ -24,13 +25,12 @@ public class frmPedido extends javax.swing.JFrame {
             panEmpleados.setOpaque(false);
             lblEmpleados.setForeground(new Color(252,215,112));
         }
-        esAdmin(user);
-        
+        esAdmin(user);        
         
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/imagenes/icon.png")));
     }
 
-    private frmPedido() {
+    private frmPedidoRepuesto() {
     }
         
     
@@ -166,7 +166,7 @@ public class frmPedido extends javax.swing.JFrame {
         panFondo2Layout.setVerticalGroup(
             panFondo2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panFondo2Layout.createSequentialGroup()
-                .addContainerGap(9, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblCerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblcerrarsesion)
@@ -324,7 +324,7 @@ public class frmPedido extends javax.swing.JFrame {
             
             
         } catch (SQLException ex) {
-            Logger.getLogger(frmPedido.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(frmPedidoRepuesto.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
     }
@@ -378,7 +378,7 @@ public class frmPedido extends javax.swing.JFrame {
                 String tipo = (String)cmbTipo.getSelectedItem();
                 objPedido.setTipoProducto(tipo);
             } catch (Exception ex) {
-                Logger.getLogger(frmPedido.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(frmPedidoRepuesto.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         
@@ -510,20 +510,21 @@ public class frmPedido extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frmPedido.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmPedidoRepuesto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frmPedido.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmPedidoRepuesto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frmPedido.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmPedidoRepuesto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frmPedido.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmPedidoRepuesto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {                
-                frmPedido frmpedido = new frmPedido();
+                frmPedidoRepuesto frmpedido = new frmPedidoRepuesto();
                 frmpedido.setLocationRelativeTo(null);
                 frmpedido.setVisible(true);                
             }

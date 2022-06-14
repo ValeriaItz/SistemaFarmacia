@@ -211,7 +211,8 @@ public class frmDatos extends javax.swing.JDialog {
                     "Pedido registrado exitosamente.",
                     "Aviso",
                     JOptionPane.INFORMATION_MESSAGE);
-        dispose();         
+        
+        dispose();                 
     }//GEN-LAST:event_btnAceptarMouseClicked
 
     private void btnCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseClicked

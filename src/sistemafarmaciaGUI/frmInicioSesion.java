@@ -40,7 +40,6 @@ public class frmInicioSesion extends javax.swing.JFrame {
         panFondo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtUsuario.setFont(new java.awt.Font("Roboto Light", 0, 14)); // NOI18N
-        txtUsuario.setForeground(new java.awt.Color(153, 153, 153));
         txtUsuario.setText("Usuario");
         txtUsuario.setPreferredSize(new java.awt.Dimension(160, 30));
         txtUsuario.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -109,7 +108,6 @@ public class frmInicioSesion extends javax.swing.JFrame {
 
         panFondo.add(panSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 0, 40, -1));
 
-        txtContraseña.setForeground(new java.awt.Color(153, 153, 153));
         txtContraseña.setText("**********");
         txtContraseña.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -214,7 +212,7 @@ public class frmInicioSesion extends javax.swing.JFrame {
     }//GEN-LAST:event_txtContraseñaKeyTyped
 
     private void txtUsuarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuarioKeyTyped
-       char tecla = evt.getKeyChar();
+        char tecla = evt.getKeyChar();
         if(tecla == KeyEvent.VK_ENTER)
             btnAceptar.doClick();
     }//GEN-LAST:event_txtUsuarioKeyTyped
