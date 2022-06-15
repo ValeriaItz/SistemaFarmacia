@@ -32,6 +32,8 @@ public class frmInicioSesion extends javax.swing.JFrame {
         panSalir = new javax.swing.JPanel();
         lblSalir = new javax.swing.JLabel();
         txtContraseña = new javax.swing.JPasswordField();
+        lblUsuario = new javax.swing.JLabel();
+        lblContraseña = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -60,7 +62,7 @@ public class frmInicioSesion extends javax.swing.JFrame {
                 txtUsuarioKeyTyped(evt);
             }
         });
-        panFondo.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 200, 160, 30));
+        panFondo.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 200, 160, 30));
 
         btnAceptar.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         btnAceptar.setText("Aceptar");
@@ -127,7 +129,15 @@ public class frmInicioSesion extends javax.swing.JFrame {
                 txtContraseñaKeyTyped(evt);
             }
         });
-        panFondo.add(txtContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 250, 160, 30));
+        panFondo.add(txtContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 250, 160, 30));
+
+        lblUsuario.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        lblUsuario.setText("Usuario:");
+        panFondo.add(lblUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 205, -1, -1));
+
+        lblContraseña.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        lblContraseña.setText("Contraseña:");
+        panFondo.add(lblContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(41, 255, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -158,25 +168,25 @@ public class frmInicioSesion extends javax.swing.JFrame {
     }//GEN-LAST:event_lblSalirMouseExited
 
     private void txtUsuarioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtUsuarioMousePressed
-        /*if(txtUsuario.getText().equals("Usuario")){
+        if(txtUsuario.getText().equals("Usuario")){
             txtUsuario.setText("");
             txtUsuario.setForeground(Color.black);
         }
         if(String.valueOf(txtContraseña.getPassword()).isEmpty()){
             txtContraseña.setText("**********");
             txtContraseña.setForeground(new Color(153,153,153));
-        }*/
+        }
     }//GEN-LAST:event_txtUsuarioMousePressed
 
     private void txtContraseñaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtContraseñaMousePressed
-       /* if(String.valueOf(txtContraseña.getPassword()).equals("**********")){
+        if(String.valueOf(txtContraseña.getPassword()).equals("**********")){
             txtContraseña.setText("");
             txtContraseña.setForeground(Color.black);
         }
         if(txtUsuario.getText().isEmpty()){
             txtUsuario.setText("Usuario");
             txtUsuario.setForeground(new Color(153,153,153));
-        }*/
+        }
     }//GEN-LAST:event_txtContraseñaMousePressed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
@@ -277,8 +287,10 @@ public class frmInicioSesion extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
+    private javax.swing.JLabel lblContraseña;
     private javax.swing.JLabel lblIconUser;
     private javax.swing.JLabel lblSalir;
+    private javax.swing.JLabel lblUsuario;
     private javax.swing.JPanel panFondo;
     private javax.swing.JPanel panSalir;
     private javax.swing.JPasswordField txtContraseña;
