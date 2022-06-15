@@ -136,11 +136,6 @@ public class frmDatos extends javax.swing.JDialog {
                 btnCancelarMouseClicked(evt);
             }
         });
-        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancelarActionPerformed(evt);
-            }
-        });
         panFondo.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 360, -1, 30));
 
         btnAceptar.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
@@ -229,8 +224,7 @@ public class frmDatos extends javax.swing.JDialog {
         if (respuesta == JOptionPane.YES_OPTION) {
             dispose();
         }
-        
-        
+                
     }//GEN-LAST:event_btnCancelarMouseClicked
 
     private void lblSalirMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSalirMouseEntered
@@ -242,10 +236,6 @@ public class frmDatos extends javax.swing.JDialog {
         panSalir.setBackground(Color.white);
         lblSalir.setForeground(Color.black);
     }//GEN-LAST:event_lblSalirMouseExited
-
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnCancelarActionPerformed
 
            
     /**

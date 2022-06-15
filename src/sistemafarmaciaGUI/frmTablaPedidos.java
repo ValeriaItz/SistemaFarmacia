@@ -187,7 +187,6 @@ public class frmTablaPedidos extends javax.swing.JDialog {
     }//GEN-LAST:event_lblSalirMouseExited
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        
         try {
             int idcell = tblPedidos.getSelectedRow();
             if(idcell <= -1){
@@ -210,9 +209,7 @@ public class frmTablaPedidos extends javax.swing.JDialog {
             }
         } catch (SQLException ex) {
             Logger.getLogger(frmTablaPedidos.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        
+        }                
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed

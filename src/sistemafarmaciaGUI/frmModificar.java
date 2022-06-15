@@ -30,8 +30,7 @@ public class frmModificar extends javax.swing.JDialog {
         this.tblPedidos = tblPedidos;
         this.pedidos = pedido;
         
-        
-        
+                
         txtProducto.setText(pedidos[1]);
         cmbTipo.setSelectedItem(pedidos[2]);
         txtCantidad.setText(pedidos[3]);
@@ -44,11 +43,9 @@ public class frmModificar extends javax.swing.JDialog {
         if(pedidos[5].equals("Las Palmas"))
             cbxSucursal1.setSelected(true); 
         else
-            cbxSucursal2.setSelected(true);
-        
-        
-                                                                          
+            cbxSucursal2.setSelected(true);                                                                                          
     }
+    
     public frmModificar(java.awt.Dialog parent, boolean modal, String[] pedido, JTable tblPedidos, boolean band) {
         super(parent, modal);
         initComponents();
@@ -70,10 +67,7 @@ public class frmModificar extends javax.swing.JDialog {
         if(pedidos[5].equals("Las Palmas"))
             cbxSucursal1.setSelected(true); 
         else
-            cbxSucursal2.setSelected(true);
-        
-        
-                                                                          
+            cbxSucursal2.setSelected(true);                                                                                          
     }
     
         
@@ -109,7 +103,6 @@ public class frmModificar extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(500, 500));
 
         panFondo.setBackground(new java.awt.Color(255, 255, 255));
         panFondo.setMinimumSize(new java.awt.Dimension(500, 500));
@@ -197,25 +190,10 @@ public class frmModificar extends javax.swing.JDialog {
 
         proveedores.add(jrbProveedor1);
         jrbProveedor1.setText("Medley");
-        jrbProveedor1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jrbProveedor1MouseClicked(evt);
-            }
-        });
-        jrbProveedor1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jrbProveedor1ActionPerformed(evt);
-            }
-        });
         panFondo.add(jrbProveedor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 240, 120, 30));
 
         proveedores.add(jrbProveedor2);
         jrbProveedor2.setText("Biomep");
-        jrbProveedor2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jrbProveedor2MouseClicked(evt);
-            }
-        });
         panFondo.add(jrbProveedor2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 280, 120, 30));
 
         sucursales.add(cbxSucursal1);
@@ -245,14 +223,9 @@ public class frmModificar extends javax.swing.JDialog {
     }//GEN-LAST:event_lblSalirMouseClicked
 
     private void btnAceptarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarMouseClicked
-       
-        
-        
-        
-        
+                                       
         Pedidos objPedido = new Pedidos();
-        
-        
+                
         
         if( txtProducto.getText().length() == 0 ) {
             JOptionPane.showMessageDialog(
@@ -376,18 +349,6 @@ public class frmModificar extends javax.swing.JDialog {
         panSalir.setBackground(Color.white);
         lblSalir.setForeground(Color.black);
     }//GEN-LAST:event_lblSalirMouseExited
-
-    private void jrbProveedor1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jrbProveedor1MouseClicked
-
-    }//GEN-LAST:event_jrbProveedor1MouseClicked
-
-    private void jrbProveedor1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbProveedor1ActionPerformed
-
-    }//GEN-LAST:event_jrbProveedor1ActionPerformed
-
-    private void jrbProveedor2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jrbProveedor2MouseClicked
-
-    }//GEN-LAST:event_jrbProveedor2MouseClicked
 
            
     /**

@@ -115,11 +115,6 @@ public class frmPedido extends javax.swing.JFrame {
         });
 
         panEmpleados.setBackground(new java.awt.Color(105, 214, 244));
-        panEmpleados.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                panEmpleadosMouseClicked(evt);
-            }
-        });
 
         lblEmpleados.setBackground(new java.awt.Color(255, 255, 255));
         lblEmpleados.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
@@ -150,6 +145,7 @@ public class frmPedido extends javax.swing.JFrame {
             .addComponent(lblEmpleados, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
         );
 
+        lblCerrarSesion.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         lblCerrarSesion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cerrarSesion.png"))); // NOI18N
         lblCerrarSesion.setText("Cerrar Sesión");
         lblCerrarSesion.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -558,10 +554,6 @@ public class frmPedido extends javax.swing.JFrame {
         lblEmpleados.setForeground(Color.black);
     }//GEN-LAST:event_lblEmpleadosMouseExited
 
-    private void panEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panEmpleadosMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_panEmpleadosMouseClicked
-
     private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
         
         if(jrbProveedor1.isSelected()) {
@@ -765,12 +757,10 @@ public class frmPedido extends javax.swing.JFrame {
             }
 
         }
-        
-        
+                
 
         objPedidoAux.setProveedor(objPedido.getProveedor());
         objPedidoAux.setSucursal(objPedido.getSucursal());
-
         
         
         listaPruebas[aux][0] = objPedidoAux.getNombreProducto();
@@ -788,8 +778,7 @@ public class frmPedido extends javax.swing.JFrame {
     
     
     private void lblCerrarSesionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCerrarSesionMouseClicked
-        
-        
+                
         frmInicioSesion dialogo = new frmInicioSesion();
         dialogo.setVisible(true);
         dialogo.setLocationRelativeTo(this);

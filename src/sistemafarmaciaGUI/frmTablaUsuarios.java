@@ -31,7 +31,6 @@ public class frmTablaUsuarios extends javax.swing.JDialog {
         } catch (SQLException ex) {
             Logger.getLogger(frmTablaUsuarios.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     /**
@@ -224,12 +223,10 @@ public class frmTablaUsuarios extends javax.swing.JDialog {
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        
-        
+                
         frmAgregarUsuario dialog = new frmAgregarUsuario(this, true, tblUsuarios);
         dialog.setLocationRelativeTo(this);
-        dialog.setVisible(true);
-        
+        dialog.setVisible(true);        
         
     }//GEN-LAST:event_btnAgregarActionPerformed
 

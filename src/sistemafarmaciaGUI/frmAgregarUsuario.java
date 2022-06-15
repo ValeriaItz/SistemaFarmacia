@@ -41,11 +41,7 @@ public class frmAgregarUsuario extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         
-        this.tblUsuarios = tblUsuarios;
-        
-        
-        
-        
+        this.tblUsuarios = tblUsuarios;                                
     }
         
     /**
@@ -151,25 +147,10 @@ public class frmAgregarUsuario extends javax.swing.JDialog {
 
         usuarios.add(jrbTipoUsuario1);
         jrbTipoUsuario1.setText("Empleado");
-        jrbTipoUsuario1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jrbTipoUsuario1MouseClicked(evt);
-            }
-        });
-        jrbTipoUsuario1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jrbTipoUsuario1ActionPerformed(evt);
-            }
-        });
         panFondo.add(jrbTipoUsuario1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 290, 120, 30));
 
         usuarios.add(jrbTipoUsuario2);
         jrbTipoUsuario2.setText("Administrador");
-        jrbTipoUsuario2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jrbTipoUsuario2MouseClicked(evt);
-            }
-        });
         panFondo.add(jrbTipoUsuario2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 330, 120, 30));
 
         txtUsuario.setFont(new java.awt.Font("Roboto Light", 0, 14)); // NOI18N
@@ -277,18 +258,6 @@ public class frmAgregarUsuario extends javax.swing.JDialog {
         panSalir.setBackground(Color.white);
         lblSalir.setForeground(Color.black);
     }//GEN-LAST:event_lblSalirMouseExited
-
-    private void jrbTipoUsuario1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jrbTipoUsuario1MouseClicked
-
-    }//GEN-LAST:event_jrbTipoUsuario1MouseClicked
-
-    private void jrbTipoUsuario1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbTipoUsuario1ActionPerformed
-
-    }//GEN-LAST:event_jrbTipoUsuario1ActionPerformed
-
-    private void jrbTipoUsuario2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jrbTipoUsuario2MouseClicked
-
-    }//GEN-LAST:event_jrbTipoUsuario2MouseClicked
 
            
     /**

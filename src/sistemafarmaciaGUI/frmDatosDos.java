@@ -39,8 +39,7 @@ public class frmDatosDos extends javax.swing.JDialog {
             Logger.getLogger(frmTablaPedidos.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        this.objPedido = objPedido;
-         
+        this.objPedido = objPedido;         
     }
 
             
@@ -166,11 +165,6 @@ public class frmDatosDos extends javax.swing.JDialog {
 
         btnCancelar1.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         btnCancelar1.setText("Cancelar");
-        btnCancelar1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnCancelar1MouseClicked(evt);
-            }
-        });
         btnCancelar1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelar1ActionPerformed(evt);
@@ -180,11 +174,6 @@ public class frmDatosDos extends javax.swing.JDialog {
 
         btnEliminar.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         btnEliminar.setText("Eliminar");
-        btnEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnEliminarMouseClicked(evt);
-            }
-        });
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarActionPerformed(evt);
@@ -216,8 +205,6 @@ public class frmDatosDos extends javax.swing.JDialog {
     }//GEN-LAST:event_lblSalirMouseClicked
 
     private void btnAceptarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarMouseClicked
-         
-        
         try {
                 String datosBD[][] = ComunicacionBD.datosBD(tabla);
                 for(int i = 0; i<datosBD.length ;i++){
@@ -236,8 +223,7 @@ public class frmDatosDos extends javax.swing.JDialog {
                     this, 
                     "Pedido registrado exitosamente.",
                     "Aviso",
-                    JOptionPane.INFORMATION_MESSAGE);
-        
+                    JOptionPane.INFORMATION_MESSAGE);        
         
         dispose();                 
     }//GEN-LAST:event_btnAceptarMouseClicked
@@ -251,9 +237,7 @@ public class frmDatosDos extends javax.swing.JDialog {
 
         if (respuesta == JOptionPane.YES_OPTION) {
             dispose();
-        }
-        
-        
+        }                
     }//GEN-LAST:event_btnModificarMouseClicked
 
     private void lblSalirMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSalirMouseEntered
@@ -265,14 +249,6 @@ public class frmDatosDos extends javax.swing.JDialog {
         panSalir.setBackground(Color.white);
         lblSalir.setForeground(Color.black);
     }//GEN-LAST:event_lblSalirMouseExited
-
-    private void btnCancelar1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelar1MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnCancelar1MouseClicked
-
-    private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEliminarMouseClicked
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
        try {
@@ -321,8 +297,7 @@ public class frmDatosDos extends javax.swing.JDialog {
                 else{
                     frmModificar dialog = new frmModificar(this, true, list[idcell], tblProductos, true);
                     dialog.setLocationRelativeTo(this);
-                    dialog.setVisible(true);
-                    
+                    dialog.setVisible(true);                    
                 }
             }
         } catch (SQLException ex) {
@@ -331,7 +306,6 @@ public class frmDatosDos extends javax.swing.JDialog {
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnCancelar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelar1ActionPerformed
-        
         int respuesta = JOptionPane.showConfirmDialog(
                 this, 
                 "¿Desea cancelar el pedido?",
@@ -346,8 +320,7 @@ public class frmDatosDos extends javax.swing.JDialog {
             ComunicacionBD.limpiar(tabla);
         } catch (SQLException ex) {
             Logger.getLogger(frmDatosDos.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+        }        
     }//GEN-LAST:event_btnCancelar1ActionPerformed
 
            
