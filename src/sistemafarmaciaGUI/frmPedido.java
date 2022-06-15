@@ -4,12 +4,15 @@ import java.awt.Color;
 import java.awt.Toolkit;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import sistemafarmacia.ComunicacionBD;
 import sistemafarmacia.Conexion;
 import sistemafarmacia.Pedidos;
+import java.util.Objects;
+
 
 public class frmPedido extends javax.swing.JFrame {
 
@@ -17,17 +20,26 @@ public class frmPedido extends javax.swing.JFrame {
     String user;
     Pedidos objPedido = new Pedidos();
     
+    String listaPruebas[][] = new String[100][5];
+    
+    int aux = 0;
+    int aux2 = 0;
+    boolean primeraVez = false;
+    boolean agregarOtroTrue = false;
+    
+    
     public frmPedido(String user) {
         initComponents();        
         
+        
         this.user = user;
         if(!esAdmin(user)){
-            panEmpleados.setEnabled(true);
-            panEmpleados.setOpaque(false);
-            lblEmpleados.setForeground(new Color(252,215,112));
+            
+            lblEmpleados.setVisible(false);
+            panEmpleados.setVisible(false);
+            
         }
-        esAdmin(user);        
-        
+       
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/imagenes/icon.png")));
     }
 
@@ -41,6 +53,7 @@ public class frmPedido extends javax.swing.JFrame {
 
         proveedores = new javax.swing.ButtonGroup();
         sucursales = new javax.swing.ButtonGroup();
+        jTabbedPane2 = new javax.swing.JTabbedPane();
         panFondo = new javax.swing.JPanel();
         panFondo2 = new javax.swing.JPanel();
         lblIconFarmacia = new javax.swing.JLabel();
@@ -48,7 +61,6 @@ public class frmPedido extends javax.swing.JFrame {
         panEmpleados = new javax.swing.JPanel();
         lblEmpleados = new javax.swing.JLabel();
         lblCerrarSesion = new javax.swing.JLabel();
-        lblIconCerrarSesion = new javax.swing.JLabel();
         lblTitulo = new javax.swing.JLabel();
         panSalir = new javax.swing.JPanel();
         lblSalir = new javax.swing.JLabel();
@@ -112,6 +124,7 @@ public class frmPedido extends javax.swing.JFrame {
         lblEmpleados.setBackground(new java.awt.Color(255, 255, 255));
         lblEmpleados.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         lblEmpleados.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblEmpleados.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/empleado.png"))); // NOI18N
         lblEmpleados.setText("Empleados");
         lblEmpleados.setPreferredSize(new java.awt.Dimension(24, 35));
         lblEmpleados.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -134,17 +147,14 @@ public class frmPedido extends javax.swing.JFrame {
         );
         panEmpleadosLayout.setVerticalGroup(
             panEmpleadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panEmpleadosLayout.createSequentialGroup()
-                .addComponent(lblEmpleados, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(lblEmpleados, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
         );
 
+        lblCerrarSesion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cerrarSesion.png"))); // NOI18N
         lblCerrarSesion.setText("Cerrar Sesión");
-
-        lblIconCerrarSesion.setBackground(new java.awt.Color(255, 255, 255));
-        lblIconCerrarSesion.addMouseListener(new java.awt.event.MouseAdapter() {
+        lblCerrarSesion.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblIconCerrarSesionMouseClicked(evt);
+                lblCerrarSesionMouseClicked(evt);
             }
         });
 
@@ -158,30 +168,22 @@ public class frmPedido extends javax.swing.JFrame {
                         .addGap(45, 45, 45)
                         .addComponent(btnVerPedidos))
                     .addGroup(panFondo2Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(lblIconCerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblCerrarSesion))
-                    .addGroup(panFondo2Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(lblIconFarmacia))
                     .addGroup(panFondo2Layout.createSequentialGroup()
                         .addGap(42, 42, 42)
-                        .addComponent(panEmpleados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(20, Short.MAX_VALUE))
+                        .addComponent(panEmpleados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panFondo2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblCerrarSesion)))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         panFondo2Layout.setVerticalGroup(
             panFondo2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panFondo2Layout.createSequentialGroup()
-                .addGroup(panFondo2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panFondo2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(lblIconCerrarSesion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(11, 11, 11))
-                    .addGroup(panFondo2Layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(lblCerrarSesion)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)))
+                .addContainerGap()
+                .addComponent(lblCerrarSesion)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addComponent(panEmpleados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(48, 48, 48)
                 .addComponent(lblIconFarmacia, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -192,9 +194,9 @@ public class frmPedido extends javax.swing.JFrame {
 
         panFondo.add(panFondo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 500));
 
-        lblTitulo.setFont(new java.awt.Font("Roboto Black", 1, 24)); // NOI18N
+        lblTitulo.setFont(new java.awt.Font("Roboto Black", 1, 36)); // NOI18N
         lblTitulo.setText("Nuevo Pedido");
-        panFondo.add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 50, -1, -1));
+        panFondo.add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 30, -1, -1));
 
         panSalir.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -465,10 +467,11 @@ public class frmPedido extends javax.swing.JFrame {
                     .addComponent(lblCantidad)
                     .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(93, 93, 93)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnBorrar2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnConfirmar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAgregarOtro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnAgregarOtro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnBorrar2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnConfirmar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -490,7 +493,7 @@ public class frmPedido extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public boolean esAdmin(String user){
+    public boolean esAdmin(String user) {
         
         try {
             String[][] datoAdmin =  ComunicacionBD.datosBD(tabla, "tipo_usuario", "administrador");
@@ -500,8 +503,7 @@ public class frmPedido extends javax.swing.JFrame {
                 if(user.equals(datoAdmin[i][2]))
                     return true;
             } 
-            
-            
+                        
         } catch (SQLException ex) {
             Logger.getLogger(frmPedido.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -511,6 +513,7 @@ public class frmPedido extends javax.swing.JFrame {
     
     private void lblSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSalirMouseClicked
         System.exit(0);
+        
     }//GEN-LAST:event_lblSalirMouseClicked
 
     private void lblSalirMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSalirMouseEntered
@@ -524,9 +527,18 @@ public class frmPedido extends javax.swing.JFrame {
     }//GEN-LAST:event_lblSalirMouseExited
 
     private void btnVerPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerPedidosActionPerformed
-        frmTablaPedidos dialog = new frmTablaPedidos(this, true);
-        dialog.setLocationRelativeTo(this);
-        dialog.setVisible(true);
+        
+        if(esAdmin(user)){
+            frmTablaPedidos dialog = new frmTablaPedidos(this, true, true);
+            dialog.setLocationRelativeTo(this);
+            dialog.setVisible(true);
+            
+        }else{
+            frmTablaPedidos dialog = new frmTablaPedidos(this, true,false);
+            dialog.setLocationRelativeTo(this);
+            dialog.setVisible(true);
+        }
+        
     }//GEN-LAST:event_btnVerPedidosActionPerformed
 
     private void lblEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEmpleadosMouseClicked
@@ -549,15 +561,6 @@ public class frmPedido extends javax.swing.JFrame {
     private void panEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panEmpleadosMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_panEmpleadosMouseClicked
-
-    private void lblIconCerrarSesionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblIconCerrarSesionMouseClicked
-        /*
-        frmInicioSesion dialogo2 = new frmInicioSesion();
-        dialogo2.setVisible(true);
-        dialogo2.setLocationRelativeTo(this);
-        lblSalirMouseClicked(evt);
-        */
-    }//GEN-LAST:event_lblIconCerrarSesionMouseClicked
 
     private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
         
@@ -605,9 +608,6 @@ public class frmPedido extends javax.swing.JFrame {
 
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
         
-        /*int ID = (txtId.getText().isEmpty()) ? 0: Integer.parseInt(txtId.getText());
-        objPedido.setId(ID);
-        */
         if( txtProducto.getText().length() == 0 ) {
             JOptionPane.showMessageDialog(
                 this,
@@ -661,22 +661,140 @@ public class frmPedido extends javax.swing.JFrame {
             }
 
         }
-
+        
+        listaPruebas[aux][0] = objPedido.getNombreProducto();
+        listaPruebas[aux][1] = objPedido.getTipoProducto();
+        listaPruebas[aux][2] = String.valueOf(objPedido.getCantidad());
+        listaPruebas[aux][3] = objPedido.getProveedor();
+        listaPruebas[aux][4] = objPedido.getSucursal();
+        
+         try {
+                for(int i = 0; i<=aux ;i++){
+                    
+                        String[] temp = {listaPruebas[i][0],listaPruebas[i][1],listaPruebas[i][2],listaPruebas[i][3],listaPruebas[i][4] };
+                        ComunicacionBD.subirBD("pedidostemporal", temp);
+                    
+                }
+                                
+                } catch (SQLException ex) {
+                    Logger.getLogger(frmPedido.class.getName()).log(Level.SEVERE, null, ex);
+                }
+        
+        aux2 = aux;
+        aux = 0;
+        
         //------------------------
-        frmPedido frame = new frmPedido();
-        frmDatos dialog = new frmDatos(frame, true, objPedido);
-        dialog.setLocationRelativeTo(this);
-        dialog.setVisible(true);
+        
+        if(agregarOtroTrue){
+            frmPedido frame = new frmPedido();
+            frmDatosDos dialog = new frmDatosDos(frame, true, objPedido, listaPruebas, aux2);
+            dialog.setLocationRelativeTo(this);
+            dialog.setVisible(true);
+            agregarOtroTrue = false;
+        }else{
+            frmPedido frame = new frmPedido();
+            frmDatos dialog = new frmDatos(frame, true, objPedido);
+            dialog.setLocationRelativeTo(this);
+            dialog.setVisible(true);
+        }
+        
         
         borrarDatos();
-        jTabbedPane1.setSelectedIndex(0);
-        panUno.setBackground(new Color(204,204,204));
-        panDos.setBackground(new Color(153,255,153));
+        
+        
+        jTabbedPane1.setSelectedIndex(0);           
+        panDos.setBackground(new Color(204,204,204));
+        panUno.setBackground(new Color(153,255,153));
     }//GEN-LAST:event_btnConfirmarActionPerformed
 
     private void btnAgregarOtroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarOtroActionPerformed
-        // TODO add your handling code here:
+        
+        agregarOtroTrue = true; 
+        Pedidos objPedidoAux = new Pedidos();
+
+        if( txtProducto.getText().length() == 0 ) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Ingrese nombre del producto.",
+                "Validación",
+                JOptionPane.ERROR_MESSAGE);
+            txtProducto.requestFocus();
+            return;
+        }else {
+            String producto = txtProducto.getText();
+            objPedidoAux.setNombreProducto(producto);
+        }
+
+        if( (String)cmbTipo.getSelectedItem() == "Selecciona uno" ) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Seleccione un tipo de producto.",
+                "Validación",
+                JOptionPane.ERROR_MESSAGE);
+            cmbTipo.requestFocus();
+            return;
+        }else {
+            try {
+                String tipo = (String)cmbTipo.getSelectedItem();
+                objPedidoAux.setTipoProducto(tipo);
+            } catch (Exception ex) {
+                Logger.getLogger(frmPedido.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        if( txtCantidad.getText().length() == 0  ) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Ingrese una cantidad.",
+                "Validación",
+                JOptionPane.ERROR_MESSAGE);
+            txtCantidad.requestFocus();
+            return;
+        }else {
+            try {
+                int cantidad = Integer.parseInt(txtCantidad.getText());
+                objPedidoAux.setCantidad(cantidad);
+            }catch(NumberFormatException ex) {
+                JOptionPane.showMessageDialog(
+                    this,
+                    "Ingrese una cantidad válida.",
+                    "Validación",
+                    JOptionPane.ERROR_MESSAGE);
+                txtCantidad.requestFocus();
+                return;
+            }
+
+        }
+        
+        
+
+        objPedidoAux.setProveedor(objPedido.getProveedor());
+        objPedidoAux.setSucursal(objPedido.getSucursal());
+
+        
+        
+        listaPruebas[aux][0] = objPedidoAux.getNombreProducto();
+        listaPruebas[aux][1] = objPedidoAux.getTipoProducto();
+        listaPruebas[aux][2] = String.valueOf(objPedidoAux.getCantidad());
+        listaPruebas[aux][3] = objPedidoAux.getProveedor();
+        listaPruebas[aux][4] = objPedidoAux.getSucursal();
+        
+        aux +=1;
+        
+        borrarDatos();
     }//GEN-LAST:event_btnAgregarOtroActionPerformed
+
+    
+    
+    
+    private void lblCerrarSesionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCerrarSesionMouseClicked
+        
+        
+        frmInicioSesion dialogo = new frmInicioSesion();
+        dialogo.setVisible(true);
+        dialogo.setLocationRelativeTo(this);
+        this.dispose();
+    }//GEN-LAST:event_lblCerrarSesionMouseClicked
        
     public void borrarDatos() {
         txtProducto.setText("");
@@ -734,13 +852,13 @@ public class frmPedido extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     public javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JRadioButton jrbProveedor1;
     private javax.swing.JRadioButton jrbProveedor2;
     private javax.swing.JLabel lblCantidad;
     private javax.swing.JLabel lblCerrarSesion;
     private javax.swing.JLabel lblDos;
     private javax.swing.JLabel lblEmpleados;
-    private javax.swing.JLabel lblIconCerrarSesion;
     private javax.swing.JLabel lblIconFarmacia;
     private javax.swing.JLabel lblProducto;
     private javax.swing.JLabel lblProveedor;

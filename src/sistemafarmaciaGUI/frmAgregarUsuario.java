@@ -2,16 +2,12 @@ package sistemafarmaciaGUI;
 
 import java.awt.Color;
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.ButtonModel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import sistemafarmacia.ComunicacionBD;
-import sistemafarmacia.Conexion;
-import sistemafarmacia.Pedidos;
-import sistemafarmaciaGUI.frmPedido;
+
 
 public class frmAgregarUsuario extends javax.swing.JDialog {        
     

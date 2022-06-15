@@ -136,6 +136,11 @@ public class frmDatos extends javax.swing.JDialog {
                 btnCancelarMouseClicked(evt);
             }
         });
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
         panFondo.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 360, -1, 30));
 
         btnAceptar.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
@@ -197,8 +202,7 @@ public class frmDatos extends javax.swing.JDialog {
     }//GEN-LAST:event_lblSalirMouseClicked
 
     private void btnAceptarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarMouseClicked
-        Conexion objConexion = new Conexion();                                       
-        
+
         String[] subir = {objPedido.getNombreProducto(),objPedido.getTipoProducto(),String.valueOf(objPedido.getCantidad()),objPedido.getProveedor(),objPedido.getSucursal()};
                 try {
                     ComunicacionBD.subirBD("pedidos", subir);
@@ -222,9 +226,7 @@ public class frmDatos extends javax.swing.JDialog {
                 "Confirmación",
                 JOptionPane.YES_NO_OPTION);
 
-        if (respuesta == JOptionPane.NO_OPTION) {
-            
-        } else if(respuesta == JOptionPane.YES_OPTION) {
+        if (respuesta == JOptionPane.YES_OPTION) {
             dispose();
         }
         
@@ -240,6 +242,10 @@ public class frmDatos extends javax.swing.JDialog {
         panSalir.setBackground(Color.white);
         lblSalir.setForeground(Color.black);
     }//GEN-LAST:event_lblSalirMouseExited
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
            
     /**

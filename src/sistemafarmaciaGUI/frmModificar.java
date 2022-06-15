@@ -21,6 +21,7 @@ public class frmModificar extends javax.swing.JDialog {
     Pedidos objPedido;
     String[] pedidos;
     JTable tblPedidos;
+    boolean preConfirmacion = false;
 
     public frmModificar(java.awt.Dialog parent, boolean modal, String[] pedido, JTable tblPedidos) {
         super(parent, modal);
@@ -48,6 +49,33 @@ public class frmModificar extends javax.swing.JDialog {
         
                                                                           
     }
+    public frmModificar(java.awt.Dialog parent, boolean modal, String[] pedido, JTable tblPedidos, boolean band) {
+        super(parent, modal);
+        initComponents();
+        
+        this.tblPedidos = tblPedidos;
+        this.pedidos = pedido;
+        this.preConfirmacion = true;
+        
+        
+        txtProducto.setText(pedidos[1]);
+        cmbTipo.setSelectedItem(pedidos[2]);
+        txtCantidad.setText(pedidos[3]);
+        
+        if(pedidos[4].equals("Medley"))
+            jrbProveedor1.setSelected(true);
+        else
+            jrbProveedor2.setSelected(true);;
+        
+        if(pedidos[5].equals("Las Palmas"))
+            cbxSucursal1.setSelected(true); 
+        else
+            cbxSucursal2.setSelected(true);
+        
+        
+                                                                          
+    }
+    
         
     /**
      * This method is called from within the constructor to initialize the form.
@@ -308,21 +336,26 @@ public class frmModificar extends javax.swing.JDialog {
         
         
         try {
-           Conexion objConexion = new Conexion();                                       
-        
             String[] subir = {objPedido.getNombreProducto(),objPedido.getTipoProducto(),String.valueOf(objPedido.getCantidad()),objPedido.getProveedor(),objPedido.getSucursal()};
-            ComunicacionBD.actualizarBD(tabla, subir, pedidos[0]);
-            javax.swing.JOptionPane.showMessageDialog(this, 
-                    "¡Pedido editado correctamente! \n", "HECHO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            if(preConfirmacion){
+               
+               ComunicacionBD.actualizarBD("pedidostemporal", subir, pedidos[0]);
+               tblPedidos.setModel(new javax.swing.table.DefaultTableModel(
+                            ComunicacionBD.datosBD("pedidostemporal"),datosTabla));
+            
+            }else{                       
+          
+                ComunicacionBD.actualizarBD(tabla, subir, pedidos[0]);
+                javax.swing.JOptionPane.showMessageDialog(this,"¡Pedido editado correctamente! \n", "HECHO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                tblPedidos.setModel(new javax.swing.table.DefaultTableModel(
+                                ComunicacionBD.datosBD(tabla),datosTabla));
+            }
+            
+            
             btnCancelarMouseClicked(evt);
             
+             
             
-           /* frmTablaPedidos dialog = new frmTablaPedidos(null, true);
-            dialog.setLocationRelativeTo(this);
-            dialog.setVisible(true);
-           */ 
-            tblPedidos.setModel(new javax.swing.table.DefaultTableModel(
-                            ComunicacionBD.datosBD(tabla),datosTabla));
         } catch (SQLException ex) {
             Logger.getLogger(frmTablaPedidos.class.getName()).log(Level.SEVERE, null, ex);
         } 

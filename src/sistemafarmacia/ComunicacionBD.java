@@ -157,6 +157,14 @@ public class ComunicacionBD {
         stm.executeUpdate("UPDATE "+ tabla +" SET " + res + " WHERE `usuario` = '" + usuario + "';");
     }
     
+    public static void limpiar(String tabla)throws SQLException{
+        Conexion conn = new Conexion();
+        Connection reg = conn.getConnection();
+        Statement stm = reg.createStatement();
+        
+        stm.executeUpdate("truncate " + tabla + ";");
+    }
+    
     public static String[] nombreColumnas(String nombre){
         switch(nombre){
             case "pedidos":
@@ -167,6 +175,11 @@ public class ComunicacionBD {
             case "usuarios":
                 return new String []{
                   "id", "tipo_usuario", "usuario", "contrasena"  
+                };
+            case "pedidostemporal":
+                return new String[]{
+                    "id","nombre_producto", "tipo", "cantidad", "proveedor",
+                    "sucursal"
                 };
             default:
                 return new String[1];

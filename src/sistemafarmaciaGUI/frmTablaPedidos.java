@@ -12,20 +12,21 @@ import javax.swing.table.DefaultTableModel;
 import sistemafarmacia.ComunicacionBD;
 import sistemafarmacia.Conexion;
 import sistemafarmacia.Pedidos;
+import sistemafarmaciaGUI.frmPedido;
 
 public class frmTablaPedidos extends javax.swing.JDialog {
     
-    
+    boolean user ;
     private static final String tabla = "pedidos";
     private static final String[] datosTabla = new String [] {
             "id","Producto", "Tipo", "Cantidad", "Proveedor",
                     "Sucursal"
             } ; 
     
-    public frmTablaPedidos(java.awt.Frame parent, boolean modal) {
+    public frmTablaPedidos(java.awt.Frame parent, boolean modal, boolean user) {
         super(parent, modal);
         initComponents();
-        
+        this.user = user;
         this.tblPedidos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         try {
             tblPedidos.setModel(new javax.swing.table.DefaultTableModel(
@@ -35,6 +36,10 @@ public class frmTablaPedidos extends javax.swing.JDialog {
             Logger.getLogger(frmTablaPedidos.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+        if(!user){
+            btnEliminar.setVisible(false);
+            btnModificar.setVisible(false);
+        }
     }
 
     /**

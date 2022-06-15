@@ -3,46 +3,47 @@ package sistemafarmaciaGUI;
 import java.awt.Color;
 import java.sql.SQLException;
 import static java.util.Collections.list;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import sistemafarmacia.ComunicacionBD;
-import sistemafarmacia.Conexion;
 import sistemafarmacia.Pedidos;
 
 public class frmDatosDos extends javax.swing.JDialog {        
     frmPedido pedido;
     Pedidos objPedido;
-    
-    //private static final String tabla = "pedidos";
-    private static final String[] columnasTabla = new String [] {
-            "Producto", "Tipo", "Cantidad"
-            } ; 
-    private static final String[] datosTabla = new String [] {} ; 
 
-    public frmDatosDos(java.awt.Frame parent, boolean modal, Pedidos objPedido) {
+    String datos[][] = new String[100][5];
+    int aux = 0;
+    
+    private static final String tabla = "pedidostemporal";
+    private static final String[] datosTabla = new String [] {
+            "id","Producto", "Tipo", "Cantidad", "Proveedor",
+                    "Sucursal"
+            } ; 
+    
+    
+    public frmDatosDos(java.awt.Frame parent, boolean modal, Pedidos objPedido,  String[][] listaPruebas, int aux) {
         super(parent, modal);
         initComponents();
-        
-        this.objPedido = objPedido;                
-        
-        //txtProducto.setText(objPedido.getNombreProducto());
-        //txtTipo.setText(objPedido.getTipoProducto());
-        //txtCantidad.setText(String.valueOf(objPedido.getCantidad()));
-        txtProveedor.setText(objPedido.getProveedor());
-        txtSucursal.setText(objPedido.getSucursal());
+        this.datos = listaPruebas;
+        this.aux = aux;
         
         this.tblProductos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-                
-        for(int columna = 0; columna < datosTabla.length; columna++){
-            //list[i][columna] = re.getString(datosTabla[columna]);
+        try {
+            tblProductos.setModel(new javax.swing.table.DefaultTableModel(
+                            ComunicacionBD.datosBD(tabla),datosTabla));
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(frmTablaPedidos.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        
+        this.objPedido = objPedido;
+         
     }
-        
+
+            
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -57,16 +58,14 @@ public class frmDatosDos extends javax.swing.JDialog {
         panFondo2 = new javax.swing.JPanel();
         lblIconFarmacia = new javax.swing.JLabel();
         lblTitulo = new javax.swing.JLabel();
-        lblProveedor = new javax.swing.JLabel();
-        lblSucursal = new javax.swing.JLabel();
-        txtSucursal = new javax.swing.JTextField();
-        txtProveedor = new javax.swing.JTextField();
-        btnCancelar = new javax.swing.JButton();
+        btnModificar = new javax.swing.JButton();
         btnAceptar = new javax.swing.JButton();
         panSalir = new javax.swing.JPanel();
         lblSalir = new javax.swing.JLabel();
-        scpProductos = new javax.swing.JScrollPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
         tblProductos = new javax.swing.JTable();
+        btnCancelar1 = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
@@ -92,39 +91,28 @@ public class frmDatosDos extends javax.swing.JDialog {
             .addGroup(panFondo2Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addComponent(lblIconFarmacia, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(295, Short.MAX_VALUE))
+                .addContainerGap(345, Short.MAX_VALUE))
         );
 
-        panFondo.add(panFondo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 100, 420));
+        panFondo.add(panFondo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 100, 470));
 
-        lblTitulo.setFont(new java.awt.Font("Roboto Black", 1, 24)); // NOI18N
+        lblTitulo.setFont(new java.awt.Font("Roboto Black", 1, 36)); // NOI18N
         lblTitulo.setText("Datos Pedido");
-        panFondo.add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 20, -1, -1));
+        panFondo.add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 20, -1, -1));
 
-        lblProveedor.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        lblProveedor.setText("Proveedor:");
-        panFondo.add(lblProveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 80, -1, 20));
-
-        lblSucursal.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        lblSucursal.setText("Sucursal:");
-        panFondo.add(lblSucursal, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 130, -1, -1));
-
-        txtSucursal.setEditable(false);
-        txtSucursal.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
-        panFondo.add(txtSucursal, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 120, 190, 30));
-
-        txtProveedor.setEditable(false);
-        txtProveedor.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
-        panFondo.add(txtProveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 70, 190, 30));
-
-        btnCancelar.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        btnCancelar.setText("Cancelar");
-        btnCancelar.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnModificar.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        btnModificar.setText("Modificar");
+        btnModificar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnCancelarMouseClicked(evt);
+                btnModificarMouseClicked(evt);
             }
         });
-        panFondo.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 370, -1, 30));
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
+        panFondo.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 370, -1, 30));
 
         btnAceptar.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         btnAceptar.setText("Aceptar");
@@ -133,7 +121,7 @@ public class frmDatosDos extends javax.swing.JDialog {
                 btnAceptarMouseClicked(evt);
             }
         });
-        panFondo.add(btnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 370, -1, 30));
+        panFondo.add(btnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 370, -1, 30));
 
         lblSalir.setFont(new java.awt.Font("Roboto", 0, 33)); // NOI18N
         lblSalir.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -162,59 +150,84 @@ public class frmDatosDos extends javax.swing.JDialog {
             .addComponent(lblSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        panFondo.add(panSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 0, 40, 40));
+        panFondo.add(panSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 0, 40, 40));
 
         tblProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
-                "Producto", "Tipo", "Cantidad"
+                "Title 1", "Title 2", "Title 3", "Title 4"
             }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false
-            };
+        ));
+        jScrollPane1.setViewportView(tblProductos);
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+        panFondo.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(112, 90, 510, 270));
+
+        btnCancelar1.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        btnCancelar1.setText("Cancelar");
+        btnCancelar1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCancelar1MouseClicked(evt);
             }
         });
-        tblProductos.setMinimumSize(new java.awt.Dimension(301, 64));
-        tblProductos.setPreferredSize(new java.awt.Dimension(301, 64));
-        scpProductos.setViewportView(tblProductos);
+        btnCancelar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelar1ActionPerformed(evt);
+            }
+        });
+        panFondo.add(btnCancelar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 370, -1, 30));
 
-        panFondo.add(scpProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 170, 300, 170));
+        btnEliminar.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnEliminarMouseClicked(evt);
+            }
+        });
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+        panFondo.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 370, 90, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(panFondo, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(panFondo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panFondo, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(panFondo, javax.swing.GroupLayout.DEFAULT_SIZE, 471, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void lblSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSalirMouseClicked
+        try {
+            ComunicacionBD.limpiar(tabla);
+        } catch (SQLException ex) {
+            Logger.getLogger(frmDatosDos.class.getName()).log(Level.SEVERE, null, ex);
+        }
         dispose();
     }//GEN-LAST:event_lblSalirMouseClicked
 
     private void btnAceptarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarMouseClicked
-        Conexion objConexion = new Conexion();                                       
+         
         
-        String[] subir = {objPedido.getNombreProducto(),objPedido.getTipoProducto(),String.valueOf(objPedido.getCantidad()),objPedido.getProveedor(),objPedido.getSucursal()};
-                try {
-                    ComunicacionBD.subirBD("pedidos", subir);
+        try {
+                String datosBD[][] = ComunicacionBD.datosBD(tabla);
+                for(int i = 0; i<datosBD.length ;i++){
+                    
+                        String[] temp = {datosBD[i][1],datosBD[i][2],datosBD[i][3],datosBD[i][4],datosBD[i][5] };
+                        ComunicacionBD.subirBD("pedidos", temp);
+                        
+                        ComunicacionBD.limpiar(tabla);
+                }
+                                
                 } catch (SQLException ex) {
                     Logger.getLogger(frmPedido.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -225,24 +238,23 @@ public class frmDatosDos extends javax.swing.JDialog {
                     "Aviso",
                     JOptionPane.INFORMATION_MESSAGE);
         
+        
         dispose();                 
     }//GEN-LAST:event_btnAceptarMouseClicked
 
-    private void btnCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseClicked
+    private void btnModificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModificarMouseClicked
         int respuesta = JOptionPane.showConfirmDialog(
                 this, 
                 "¿Desea cancelar el pedido?",
                 "Confirmación",
                 JOptionPane.YES_NO_OPTION);
 
-        if (respuesta == JOptionPane.NO_OPTION) {
-            
-        } else if(respuesta == JOptionPane.YES_OPTION) {
+        if (respuesta == JOptionPane.YES_OPTION) {
             dispose();
         }
         
         
-    }//GEN-LAST:event_btnCancelarMouseClicked
+    }//GEN-LAST:event_btnModificarMouseClicked
 
     private void lblSalirMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSalirMouseEntered
         panSalir.setBackground(Color.red);
@@ -253,6 +265,90 @@ public class frmDatosDos extends javax.swing.JDialog {
         panSalir.setBackground(Color.white);
         lblSalir.setForeground(Color.black);
     }//GEN-LAST:event_lblSalirMouseExited
+
+    private void btnCancelar1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelar1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCancelar1MouseClicked
+
+    private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEliminarMouseClicked
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+       try {
+            int idcell = tblProductos.getSelectedRow();
+            if(idcell <= -1){
+                javax.swing.JOptionPane.showMessageDialog(this, "Debes seleccionar el pedido que deseas elminar. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            }
+            else{                
+            String list[][] = ComunicacionBD.datosBD(tabla);
+                
+                String id = list[idcell][0];
+                
+                if(id.isEmpty()){
+                    javax.swing.JOptionPane.showMessageDialog(this, "Debes seleccionar el pedido que deseas elminar. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                }
+                else{
+                    
+                    int respuesta = JOptionPane.showConfirmDialog(this, "¿Seguro que quieres eliminar este pedido?", "Aviso", JOptionPane.OK_CANCEL_OPTION);
+                    if(respuesta == JOptionPane.OK_OPTION){
+                        ComunicacionBD.eliminarBD(tabla, id);
+                        javax.swing.JOptionPane.showMessageDialog(this, "¡Pedido eliminado con éxito! \n", "HECHO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                        tblProductos.setModel(new javax.swing.table.DefaultTableModel(
+                                ComunicacionBD.datosBD(tabla),datosTabla));
+                    }
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(frmTablaPedidos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        try {
+            int idcell = tblProductos.getSelectedRow();
+            if(idcell <= -1){
+                javax.swing.JOptionPane.showMessageDialog(this, "Debes seleccionar el pedido que deseas modificar. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            }
+            else{
+
+                String list[][] = ComunicacionBD.datosBD(tabla);
+                String id = list[idcell][0];
+                
+                if(id.isEmpty()){
+                    javax.swing.JOptionPane.showMessageDialog(this, "Debes seleccionar el pedido que deseas modificar. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                }
+                else{
+                    frmModificar dialog = new frmModificar(this, true, list[idcell], tblProductos, true);
+                    dialog.setLocationRelativeTo(this);
+                    dialog.setVisible(true);
+                    
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(frmTablaPedidos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnCancelar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelar1ActionPerformed
+        
+        int respuesta = JOptionPane.showConfirmDialog(
+                this, 
+                "¿Desea cancelar el pedido?",
+                "Confirmación",
+                JOptionPane.YES_NO_OPTION);
+
+        if (respuesta == JOptionPane.YES_OPTION) {
+            dispose();
+        }
+        
+        try {
+            ComunicacionBD.limpiar(tabla);
+        } catch (SQLException ex) {
+            Logger.getLogger(frmDatosDos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_btnCancelar1ActionPerformed
 
            
     /**
@@ -315,19 +411,17 @@ public class frmDatosDos extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
-    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnCancelar1;
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnModificar;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblIconFarmacia;
-    private javax.swing.JLabel lblProveedor;
     private javax.swing.JLabel lblSalir;
-    private javax.swing.JLabel lblSucursal;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JPanel panFondo;
     private javax.swing.JPanel panFondo2;
     private javax.swing.JPanel panSalir;
-    private javax.swing.JScrollPane scpProductos;
     private javax.swing.JTable tblProductos;
     private javax.swing.JTextField txtProducto3;
-    private javax.swing.JTextField txtProveedor;
-    private javax.swing.JTextField txtSucursal;
     // End of variables declaration//GEN-END:variables
 }
