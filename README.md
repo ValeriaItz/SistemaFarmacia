@@ -6,7 +6,9 @@ Para realizar un pedido, el usuario debe indicar la siguiente información:
 Nombre del producto, tipo, cantidad, nombre del proveedor y sucursal.
 
 Equipo 6:
-Valeria Itzel López Hernández
-Jorge Pavón Espinosa
-Ricardo Diego Penagos Arenas
-Daniel Sánchez Pérez
+-Valeria Itzel López Hernández 
+-Jorge Pavón Espinosa 
+-Ricardo Diego Penagos Arenas 
+-Daniel Sánchez Pérez
+
+Iconos: https://www.flaticon.es/iconos-gratis/pedidos
